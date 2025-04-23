@@ -1,0 +1,175 @@
+/* Import Google Fonts at the top */
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+/* Root and global styles */
+:root {
+  font-family: "PT Sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Highlight class for search functionality (replacing @apply for CDN compatibility) */
+.highlight {
+  background-color: #2563eb; /* Tailwind's bg-blue-600 */
+  border-radius: 0.5rem; /* Tailwind's rounded-lg */
+  padding: 0.25rem; /* Tailwind's p-1 */
+}
+
+/* Carousel styles for Hobby.jsx */
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
+}
+
+@media (max-width: 767.98px) {
+  .carousel-item img {
+    max-height: 320px;
+  }
+}
+
+/* Back to top button for Footer.jsx */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0891b2; /* Cyan-600 */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 24px;
+  z-index: 1000;
+  transition: background-color 0.3s;
+}
+
+.back-to-top:hover {
+  background-color: #0e7490; /* Cyan-700 */
+}
+
+/* Animation for project details */
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skill card for Experties.jsx */
+.skill-card {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-card:hover {
+  border: 1px solid white;
+}
+
+/* Book card for Hobby.jsx */
+.book-card {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid white;
+  width: 11rem;
+  padding: 1.25rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-2px);
+  border: 1px solid #22d3ee; /* Cyan-400 */
+}
+
+/* Project card for Projects.jsx */
+.project-card {
+  background: linear-gradient(to left, #1f2937, #374151); /* Gray-800 to Gray-700 */
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Timeline styles for AboutMe.jsx */
+.timeline-content {
+  padding: 1.25rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid white;
+  border-radius: 0.75rem;
+  width: 100%;
+  margin-right: 5%;
+  max-width: 24rem;
+  z-index: 0;
+}
+
+.timeline-content:hover {
+  border: 1px solid #22d3ee; /* Cyan-400 */
+}
+
+.timeline-content2 {
+  padding: 1.25rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid white;
+  border-radius: 0.75rem;
+  width: 100%;
+  margin-left: 5%;
+  max-width: 20rem;
+  z-index: 0;
+}
+
+.timeline-content2:hover {
+  border: 1px solid #22d3ee; /* Cyan-400 */
+}
+
+/* Timeline vertical line for AboutMe.jsx */
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: #03082f; /* Dark blue */
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
+}
+
+@media (max-width: 768px) {
+  .timeline::after {
+    left: 20px;
+  }
+}
+
+/* Banner styles */
+#banner {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  #banner {
+    min-height: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
