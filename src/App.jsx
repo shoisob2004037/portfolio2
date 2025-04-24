@@ -12,6 +12,7 @@ import Reviews from "./pages/Reviews"
 import NotFound from "./pages/NotFound"
 import ScrollToSection from "./components/ScrollToSection"
 import Certifications from "./pages/Certifications"
+import ComingSoon from "./pages/ComingSoon"
 
 function App() {
   const { darkMode } = useTheme()
@@ -33,6 +34,7 @@ function App() {
           <Route path="reviews" element={<Reviews />} />
           <Route path="certifications" element={<Certifications />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/coming" element={<ComingSoon />} />
         </Route>
       </Routes>
     </div>
