@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom"
 import { useTheme } from "./context/ThemeContext"
 import Layout from "./components/Layout"
 import Home from "./pages/Home"
-import Expertise from "./pages/experties"
+import Expertise from "./pages/Experties"
 import Projects from "./pages/Projects"
 import Hobby from "./pages/Hobby"
 import AboutMe from "./pages/AboutMe"
@@ -12,6 +12,7 @@ import Reviews from "./pages/Reviews"
 import NotFound from "./pages/NotFound"
 import ScrollToSection from "./components/ScrollToSection"
 import Certifications from "./pages/Certifications"
+import ComingSoon from "./pages/ComingSoon"
 
 function App() {
   const { darkMode } = useTheme()
@@ -33,6 +34,7 @@ function App() {
           <Route path="reviews" element={<Reviews />} />
           <Route path="certifications" element={<Certifications />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/coming" element={<ComingSoon />} />
         </Route>
       </Routes>
     </div>
