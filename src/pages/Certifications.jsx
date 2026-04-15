@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useTheme } from "../context/ThemeContext"
 import { motion, AnimatePresence } from "framer-motion"
-import { Award, X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Award, X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const Certifications = () => {
   const { darkMode } = useTheme()
@@ -11,6 +11,31 @@ const Certifications = () => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const certifications = [
+    // === NEW ACADEMIC / RESEARCH CERTIFICATES (Added at top) ===
+        {
+      id: "c17",
+      title: "Paper Presentation in ICCIT-2025",
+      issuer: "ICCIT 2025",
+      image: "/iceccte2026.jpg",
+      highlight: "DeepGuard-XSS: Leveraging Large Language Models with CNN-BiLSTM"
+    },
+    {
+      id: "c18",
+      title: "Paper Presentation in ICECTE-2026",
+      issuer: "ICECTE 2026",
+      image: "/xss.jpg",
+      highlight: "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision XSS Detection"
+    },
+    {
+      id: "c16",
+      title: "3rd Place - Project Showcasing",
+      issuer: "RUET INNOVISTA 2025",
+      image: "/project.jpg",         // ← Put your second image here
+      highlight: "Faculty of Electrical & Computer Engineering"
+    },
+
+
+    // === Existing Certifications (kept as before) ===
     {
       id: "c1",
       title: "Full Stack Development with MERN",
@@ -50,19 +75,19 @@ const Certifications = () => {
     {
       id: "c7",
       title: "JavaScript Certification Test",
-      issuer: "Complete Coding by Prashant Sir (YouTube Course)",
+      issuer: "Complete Coding by Prashant Sir",
       image: "/js.PNG",
     },
     {
       id: "c8",
       title: "HTML Certification Test",
-      issuer: "Complete Coding by Prashant Sir (YouTube Course)",
+      issuer: "Complete Coding by Prashant Sir",
       image: "/html.PNG",
     },
     {
       id: "c9",
       title: "CSS Certification Test",
-      issuer: "Complete Coding by Prashant Sir (YouTube Course)",
+      issuer: "Complete Coding by Prashant Sir",
       image: "/cssc.PNG",
     },
     {
@@ -120,18 +145,13 @@ const Certifications = () => {
     setSelectedIndex(newIndex)
   }
 
-  // Handle keyboard navigation
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!selectedImage) return
-      
-      if (e.key === "Escape") {
-        handleCloseModal()
-      } else if (e.key === "ArrowLeft") {
-        handlePrevImage(e)
-      } else if (e.key === "ArrowRight") {
-        handleNextImage(e)
-      }
+      if (e.key === "Escape") handleCloseModal()
+      else if (e.key === "ArrowLeft") handlePrevImage(e)
+      else if (e.key === "ArrowRight") handleNextImage(e)
     }
 
     window.addEventListener("keydown", handleKeyDown)
@@ -148,140 +168,121 @@ const Certifications = () => {
           className="text-center mb-12"
         >
           <h1 className={`text-4xl font-bold ${darkMode ? "text-white" : "text-gray-900"} mb-4`}>
-            <span className="relative inline-block">
-              My Certifications
-              <span className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></span>
-            </span>
+            My Certifications & Achievements
           </h1>
-          <p className="text-lg max-w-2xl mx-auto">
-            Explore the certifications I have earned, showcasing my expertise in web development, full-stack
-            technologies, and professional skills.
+          <p className="text-lg max-w-2xl mx-auto text-gray-600 dark:text-gray-400">
+            Academic contributions, research presentations, project awards, and professional certifications
           </p>
         </motion.div>
 
         {/* Certifications Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {certifications.map((cert, index) => (
             <motion.div
               key={cert.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ 
-                y: -10,
-                boxShadow: darkMode 
-                  ? "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4)" 
-                  : "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              whileHover={{ y: -8, scale: 1.02 }}
               className={`
-                rounded-xl overflow-hidden shadow-lg cursor-pointer
-                ${darkMode ? "bg-gray-800" : "bg-white"}
+                rounded-2xl overflow-hidden shadow-lg cursor-pointer group
+                ${darkMode ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-100"}
               `}
               onClick={() => handleImageClick(cert.image, index)}
             >
-              <div className="h-48 relative overflow-hidden">
+              <div className="relative h-52 overflow-hidden">
                 <img
-                  src={cert.image || "/placeholder.svg"}
+                  src={cert.image}
                   alt={cert.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute inset-0 bg-gradient-to-r ${cert.color || "from-cyan-500 to-blue-500"} opacity-30`}></div>
-                <div className="absolute top-3 right-3 bg-white/90 dark:bg-gray-900/90 p-2 rounded-full">
-                  <Award className={`w-5 h-5 ${darkMode ? "text-cyan-400" : "text-cyan-600"}`} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                <div className="absolute top-4 right-4">
+                  <Award className="w-7 h-7 text-amber-400 drop-shadow-lg" />
                 </div>
               </div>
 
-              <div className={`p-6 ${darkMode ? "bg-gray-800" : "bg-gradient-to-br from-white to-cyan-50"}`}>
-                <h2 className="text-xl font-bold mb-2">{cert.title}</h2>
-                <p
-                  className={`
-                    text-md font-semibold 
-                    ${darkMode ? "text-cyan-400" : "text-cyan-600"}
-                  `}
-                >
+              <div className={`p-6 ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+                <h3 className="font-bold text-lg leading-tight mb-2 line-clamp-2">
+                  {cert.title}
+                </h3>
+                
+                {cert.highlight && (
+                  <p className="text-sm text-amber-500 dark:text-amber-400 font-medium mb-2">
+                    {cert.highlight}
+                  </p>
+                )}
+
+                <p className={`text-sm font-medium ${darkMode ? "text-cyan-400" : "text-cyan-600"}`}>
                   {cert.issuer}
                 </p>
-                <div className="mt-4 flex justify-end">
-                  <span className="text-xs px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200">
-                    Click to view
-                  </span>
+
+                <div className="mt-4 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                  Click to enlarge →
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Full-Screen Modal */}
-        <AnimatePresence>
-          {selectedImage && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className={`
-                fixed inset-0 z-50 flex items-center justify-center p-4
-                ${darkMode ? "bg-black bg-opacity-90" : "bg-gray-900 bg-opacity-90"}
-              `}
-              onClick={handleCloseModal}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ type: "spring", damping: 25 }}
-                className="relative max-w-4xl w-full h-[90vh] flex flex-col items-center justify-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <img
-                  src={selectedImage || "/placeholder.svg"}
-                  alt="Full-screen certificate"
-                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                />
-                
-                {/* Navigation buttons */}
-                <button
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-all duration-300"
-                  onClick={handlePrevImage}
-                  aria-label="Previous certificate"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                
-                <button
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-all duration-300"
-                  onClick={handleNextImage}
-                  aria-label="Next certificate"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-                
-                {/* Close button */}
-                <button
-                  className="absolute top-4 right-4 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-all duration-300"
-                  onClick={handleCloseModal}
-                  aria-label="Close full-screen view"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-                
-                {/* Certificate info */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-6 py-3 rounded-full text-sm">
-                  {certifications[selectedIndex].title} • {certifications[selectedIndex].issuer}
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        </div>
       </div>
+
+      {/* Full-Screen Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4"
+            onClick={handleCloseModal}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative max-w-5xl w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedImage}
+                alt="Certificate"
+                className="max-h-[90vh] w-auto mx-auto rounded-lg shadow-2xl object-contain"
+              />
+
+              {/* Navigation Buttons */}
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-4 rounded-full transition-all"
+              >
+                <ChevronLeft className="w-7 h-7" />
+              </button>
+
+              <button
+                onClick={handleNextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-4 rounded-full transition-all"
+              >
+                <ChevronRight className="w-7 h-7" />
+              </button>
+
+              {/* Close Button */}
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all"
+              >
+                <X className="w-7 h-7" />
+              </button>
+
+              {/* Info Bar */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/70 text-white px-8 py-3 rounded-full text-sm font-medium shadow-lg">
+                {certifications[selectedIndex].title} — {certifications[selectedIndex].issuer}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
 
 export default Certifications
-
