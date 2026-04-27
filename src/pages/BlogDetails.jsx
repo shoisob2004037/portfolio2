@@ -1,7 +1,7 @@
 // pages/BlogDetails.jsx
 "use client";
 
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "framer-motion";
 import { 
@@ -11,294 +11,45 @@ import {
   ArrowLeft, 
   Github, 
   ExternalLink, 
-  Heart, 
-  MessageCircle, 
-  Share2, 
-  Bookmark, 
   ChevronLeft, 
-  ChevronRight,
-  User
+  ChevronRight
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-// Full blog posts data with detailed content
-const blogPostsData = {
-  1: {
-    id: 1,
-    title: "Building a Real-time Vehicle Counting System with YOLO11",
-    date: "April 15, 2026",
-    readTime: "10 min read",
-    category: "Computer Vision",
-    tags: ["YOLO", "Python", "Streamlit", "AI", "Computer Vision"],
-    image: "/car-detection.png",
-    author: "Mahadi Hasan Shaisob",
-    authorImage: "/dp.jpg",
-    content: `
-      <div class="blog-content">
-        <h2>Introduction</h2>
-        <p>Vehicle detection and counting is a crucial task in traffic monitoring, urban planning, and smart city applications. Traditional methods using inductive loops or infrared sensors are expensive to install and maintain. Computer vision offers a cost-effective alternative that can be deployed using existing CCTV infrastructure.</p>
-        
-        <p>In this comprehensive guide, I'll walk you through how I built a real-time vehicle counting system using YOLO11 and Streamlit. This system can detect multiple vehicle types, count them in both directions, and provide real-time analytics through a beautiful web interface.</p>
-
-        <img src="/car-detection-banner.png" alt="Vehicle Detection System Overview" class="blog-image" />
-
-        <h2>The Problem Statement</h2>
-        <p>Traditional vehicle counting methods face several challenges:</p>
-        <ul>
-          <li><strong>High installation costs</strong> - Physical sensors require road disruption</li>
-          <li><strong>Limited vehicle types</strong> - Can't distinguish between cars, buses, motorcycles</li>
-          <li><strong>Single direction only</strong> - Most systems only count one direction</li>
-          <li><strong>Maintenance issues</strong> - Physical sensors degrade over time</li>
-        </ul>
-
-        <p>My goal was to create a software-only solution that could:</p>
-        <ul>
-          <li>Detect 4 vehicle types: Cars, Motorcycles, Buses, and Trucks</li>
-          <li>Count vehicles moving in both directions (Up and Down)</li>
-          <li>Work with standard CCTV footage or uploaded videos</li>
-          <li>Provide real-time statistics and visualizations</li>
-        </ul>
-
-        <h2>Choosing the Right Technology Stack</h2>
-        
-        <h3>Why YOLO11?</h3>
-        <p>YOLO (You Only Look Once) is a state-of-the-art, real-time object detection system. I chose YOLO11 for several reasons:</p>
-        <ul>
-          <li><strong>Speed</strong> - Processes at 30+ FPS on standard GPU</li>
-          <li><strong>Accuracy</strong> - Excellent mAP scores on COCO dataset</li>
-          <li><strong>Pre-trained models</strong> - Already trained on vehicle classes</li>
-          <li><strong>Easy integration</strong> - Simple Python API</li>
-        </ul>
-
-        <h3>Why BotSORT for Tracking?</h3>
-        <p>BotSORT is a robust multi-object tracking algorithm that:</p>
-        <ul>
-          <li>Maintains consistent IDs across frames</li>
-          <li>Handles occlusions gracefully</li>
-          <li>Low computational overhead</li>
-          <li>Excellent for traffic scenarios</li>
-        </ul>
-
-        <h3>Why Streamlit for the Interface?</h3>
-        <p>Streamlit allowed me to quickly build an interactive web interface with:</p>
-        <ul>
-          <li>Video upload functionality</li>
-          <li>Real-time parameter adjustment</li>
-          <li>Live statistics dashboard</li>
-          <li>Progress tracking</li>
-        </ul>
-
-        <h2>Implementation Details</h2>
-        
-        <h3>Step 1: Setting Up YOLO11 for Vehicle Detection</h3>
-        <pre><code>from ultralytics import YOLO
-import cv2
-
-# Load pre-trained YOLO11 model
-model = YOLO('yolo11s.pt')
-
-# Vehicle classes from COCO dataset
-VEHICLE_CLASSES = {
-    2: 'Car',
-    3: 'Motorcycle', 
-    5: 'Bus',
-    7: 'Truck'
-}
-
-def detect_vehicles(frame):
-    results = model(frame, conf=0.5)
-    detections = []
-    for r in results:
-        boxes = r.boxes
-        for box in boxes:
-            cls = int(box.cls[0])
-            if cls in VEHICLE_CLASSES:
-                x1, y1, x2, y2 = box.xyxy[0].tolist()
-                conf = float(box.conf[0])
-                detections.append({
-                    'bbox': [x1, y1, x2, y2],
-                    'class': VEHICLE_CLASSES[cls],
-                    'class_id': cls,
-                    'confidence': conf
-                })
-    return detections</code></pre>
-
-        <h3>Step 2: Implementing BotSORT Tracking</h3>
-        <pre><code>from ultralytics import YOLO
-from ultralytics.utils.ops import non_max_suppression
-
-# Initialize BotSORT tracker
-tracker = BotSORT(
-    track_high_thresh=0.5,
-    track_low_thresh=0.4,
-    new_track_thresh=0.6,
-    match_thresh=0.8
-)
-
-def update_tracks(detections, frame):
-    # Format detections for tracker
-    dets = []
-    for det in detections:
-        x1, y1, x2, y2 = det['bbox']
-        w = x2 - x1
-        h = y2 - y1
-        dets.append([x1, y1, w, h, det['confidence'], det['class_id']])
-    
-    # Update tracks
-    tracks = tracker.update(np.array(dets), frame)
-    return tracks</code></pre>
-
-        <h3>Step 3: The Counting Logic</h3>
-        <p>The core counting logic tracks each vehicle's centroid position relative to a counting line.</p>
-
-        <pre><code>class VehicleCounter:
-    def __init__(self, line_position=0.66):
-        self.line_y = line_position
-        self.down_count = {2: 0, 3: 0, 5: 0, 7: 0}
-        self.up_count = {2: 0, 3: 0, 5: 0, 7: 0}
-        self.track_buffer = {}
-    
-    def count_vehicle(self, track_id, class_id, centroid_y):
-        current_side = -1 if centroid_y < self.line_y else 1
-        
-        if track_id not in self.track_buffer:
-            self.track_buffer[track_id] = {'sides': [], 'counted': False, 'last_side': None}
-        
-        buffer = self.track_buffer[track_id]
-        buffer['sides'].append(current_side)
-        if len(buffer['sides']) > 3:
-            buffer['sides'].pop(0)
-        
-        if len(buffer['sides']) == 3 and not buffer['counted']:
-            if all(s == buffer['sides'][0] for s in buffer['sides']):
-                if buffer['last_side'] is not None and buffer['last_side'] != buffer['sides'][0]:
-                    if buffer['sides'][0] == 1:
-                        self.down_count[class_id] += 1
-                    else:
-                        self.up_count[class_id] += 1
-                    buffer['counted'] = True
-                buffer['last_side'] = buffer['sides'][0]
-        
-        return self.down_count, self.up_count</code></pre>
-
-        <h2>Results and Performance</h2>
-        
-        <h3>Accuracy Metrics</h3>
-        <p>After extensive testing on diverse traffic videos, the system achieved:</p>
-        <ul>
-          <li><strong>Overall accuracy:</strong> 95.8%</li>
-          <li><strong>Car detection:</strong> 97.2%</li>
-          <li><strong>Motorcycle detection:</strong> 91.5%</li>
-          <li><strong>Bus detection:</strong> 94.3%</li>
-          <li><strong>Truck detection:</strong> 93.8%</li>
-        </ul>
-
-        <h2>Conclusion</h2>
-        <p>This project demonstrates the power of modern computer vision for solving real-world traffic monitoring challenges. The complete source code is available on GitHub.</p>
-      </div>
-    `,
-    github: "https://github.com/shoisob2004037/streamlit_car_detection_and_counting_app",
-    liveDemo: "https://github.com/shoisob2004037/streamlit_car_detection_and_counting_app"
-  },
-  2: {
-    id: 2,
-    title: "My IEEE Paper Journey: DeepGuard-XSS Detection System",
-    date: "March 20, 2026",
-    readTime: "8 min read",
-    category: "Research",
-    tags: ["XSS", "Deep Learning", "Cybersecurity", "IEEE", "Research"],
-    image: "/xssp.png",
-    author: "Mahadi Hasan Shaisob",
-    authorImage: "/dp.jpg",
-    content: `
-      <div class="blog-content">
-        <h2>The Motivation Behind DeepGuard-XSS</h2>
-        <p>Cross-site scripting (XSS) remains one of the most prevalent web security vulnerabilities, affecting nearly 80% of websites according to OWASP. Traditional detection methods struggle to identify obfuscated attack payloads.</p>
-        
-        <p>This motivated me to develop a more robust solution that could identify both traditional and obfuscated XSS attacks with high accuracy, using the power of deep learning and large language models.</p>
-
-        <h2>Dataset Construction</h2>
-        <p>A critical challenge in XSS research is the lack of comprehensive, labeled datasets containing obfuscated payloads.</p>
-        
-        <h3>Data Collection</h3>
-        <p>I aggregated XSS payloads from multiple public sources including XSS Payload Lists, academic research datasets, and real-world XSS attacks.</p>
-
-        <h3>LLM-driven Obfuscation with CodeT5</h3>
-        <p>To simulate real-world evasive techniques, I used CodeT5 to generate obfuscated variants.</p>
-
-        <h2>Proposed Architectures</h2>
-        
-        <h3>1. Character-level CNN Model</h3>
-        <p>The CNN model processes characters at the byte level, capturing local patterns in XSS payloads.</p>
-        
-        <h3>2. BiLSTM Model</h3>
-        <p>The BiLSTM architecture captures long-range dependencies and context from both directions.</p>
-
-        <h2>Results</h2>
-        
-        <h3>Performance Metrics</h3>
-        <table class="results-table">
-          <tr>
-            <th>Model</th>
-            <th>Accuracy</th>
-            <th>Precision</th>
-            <th>Recall</th>
-            <th>F1-Score</th>
-          </tr>
-          <tr>
-            <td>BiLSTM</td>
-            <td>98.1%</td>
-            <td>97.8%</td>
-            <td>98.3%</td>
-            <td>98.0%</td>
-          </tr>
-          <tr>
-            <td>CNN</td>
-            <td>97.22%</td>
-            <td>96.9%</td>
-            <td>97.5%</td>
-            <td>97.2%</td>
-          </tr>
-        </table>
-
-        <h2>Publication Journey</h2>
-        <p>The paper was presented at ICRIMST 2026 in Rajshahi, Bangladesh and published on IEEE Xplore on March 16, 2026.</p>
-
-        <div class="highlight-box">
-          <h4>📄 Paper Information</h4>
-          <p><strong>Title:</strong> DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks</p>
-          <p><strong>IEEE Xplore:</strong> <a href="https://ieeexplore.ieee.org/document/11429351">View on IEEE Xplore</a></p>
-        </div>
-      </div>
-    `,
-    github: "https://github.com/shoisob2004037/streamlit_xss_detection_with_obfuscated",
-    liveDemo: "https://xssdetectionwithobfuscated.streamlit.app"
-  }
-};
-
 const BlogDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { darkMode } = useTheme();
   const [post, setPost] = useState(null);
+  const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      const postData = blogPostsData[id];
-      if (postData) {
-        setPost(postData);
+    const fetchBlogPosts = async () => {
+      try {
+        const response = await fetch('/data/blogPosts.json');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setAllPosts(data.posts || []);
+        const foundPost = data.posts.find(p => p.id === parseInt(id));
+        setPost(foundPost || null);
+      } catch (error) {
+        console.error('Error loading blog post:', error);
+        setPost(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }, 100);
+    };
+    fetchBlogPosts();
   }, [id]);
 
   // Find next and previous posts
-  const postIds = Object.keys(blogPostsData).map(Number);
-  const currentIndex = postIds.indexOf(Number(id));
-  const prevPostId = currentIndex > 0 ? postIds[currentIndex - 1] : null;
-  const nextPostId = currentIndex < postIds.length - 1 ? postIds[currentIndex + 1] : null;
+  const currentIndex = allPosts.findIndex(p => p.id === parseInt(id));
+  const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   if (loading) {
     return (
@@ -432,7 +183,7 @@ const BlogDetails = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className={`blog-post-content ${darkMode ? "dark-mode" : ""}`}
+          className="blog-post-content"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
@@ -478,9 +229,9 @@ const BlogDetails = () => {
           transition={{ delay: 0.4 }}
           className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
         >
-          {prevPostId ? (
+          {prevPost ? (
             <Link
-              to={`/blogs/${prevPostId}`}
+              to={`/blogs/${prevPost.id}`}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
                 darkMode
                   ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
@@ -488,22 +239,22 @@ const BlogDetails = () => {
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
-              Previous Post
+              Previous
             </Link>
           ) : (
             <div></div>
           )}
           
-          {nextPostId ? (
+          {nextPost ? (
             <Link
-              to={`/blogs/${nextPostId}`}
+              to={`/blogs/${nextPost.id}`}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
                 darkMode
                   ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
               }`}
             >
-              Next Post
+              Next
               <ChevronRight className="w-4 h-4" />
             </Link>
           ) : (
@@ -594,6 +345,13 @@ const BlogDetails = () => {
         .results-table th {
           background: ${darkMode ? '#1f2937' : '#f3f4f6'};
           font-weight: bold;
+        }
+        
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </div>
