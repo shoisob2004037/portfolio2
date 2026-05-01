@@ -20,7 +20,7 @@ const Publications = () => {
       date: "January 29-31, 2026",
       publishedOn: "IEEE Xplore: March 16, 2026",
       link: "https://ieeexplore.ieee.org/document/11429351",
-      doi: "10.1109/ICRIMST12345.2026.11429351", // Approximate DOI format
+      doi: "10.1109/ICECTE69292.2026.11429351", 
       abstract: `Cross-site scripting remains a major security threat for web platforms, with obfuscated attack payloads continuing to bypass traditional detection. In this study, an extensive labeled XSS dataset was constructed by aggregating samples from several public sources and further enriched using LLM-driven (CodeT5) obfuscation to simulate real-world evasive techniques. The proposed DeepGuard-XSS framework explores two deep architectures: a character-level Convolutional Neural Network (CNN) and a BiLSTM model optimized for handling complex, variable-length script patterns. The BiLSTM configuration leverages an expanded embedding space and dual bidirectional LSTM layers, achieving a test accuracy of 98.1%, with high precision, recall, and F1 metrics. Similarly, the updated CNN variant attains 97.22% accuracy, demonstrating strong performance even as obfuscated and adversarial payload diversity increases. In addition, both deep models outperform several classical baseline machine learning classifiers (Logistic Regression, Multinomial NB, Decision Tree, XGBoost) evaluated on the same dataset, confirming the benefit of the proposed deep architectures for robust XSS detection.`,
       metrics: {
         accuracy: "98.1%",
