@@ -1,4 +1,3 @@
-// Publications.jsx
 "use client";
 
 import { useState } from "react";
@@ -22,12 +21,21 @@ const Publications = () => {
       link: "https://ieeexplore.ieee.org/document/11429351",
       doi: "10.1109/ICECTE69292.2026.11429351", 
       abstract: `Cross-site scripting remains a major security threat for web platforms, with obfuscated attack payloads continuing to bypass traditional detection. In this study, an extensive labeled XSS dataset was constructed by aggregating samples from several public sources and further enriched using LLM-driven (CodeT5) obfuscation to simulate real-world evasive techniques. The proposed DeepGuard-XSS framework explores two deep architectures: a character-level Convolutional Neural Network (CNN) and a BiLSTM model optimized for handling complex, variable-length script patterns. The BiLSTM configuration leverages an expanded embedding space and dual bidirectional LSTM layers, achieving a test accuracy of 98.1%, with high precision, recall, and F1 metrics. Similarly, the updated CNN variant attains 97.22% accuracy, demonstrating strong performance even as obfuscated and adversarial payload diversity increases. In addition, both deep models outperform several classical baseline machine learning classifiers (Logistic Regression, Multinomial NB, Decision Tree, XGBoost) evaluated on the same dataset, confirming the benefit of the proposed deep architectures for robust XSS detection.`,
-      metrics: {
-        accuracy: "98.1%",
-        cnnAccuracy: "97.22%",
-      },
       technologies: ["Large Language Models", "CNN", "BiLSTM", "CodeT5", "XSS Detection", "Cybersecurity"],
     },
+    {
+  "id": 2,
+  "title": "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection",
+  "authors": "Mahadi Hasan Shaisob, Md. Mehedi Hassan, Rubaeat Ahammed, Md Arif Hossen",
+  "conference": " 2025 28th International Conference on Computer and Information Technology (ICCIT)",
+  "location": "Cox's Bazar, Bangladesh",
+  "date": "December 19-21, 2025",
+  "publishedOn": "IEEE Xplore: May 6, 2026",
+  "link": "https://ieeexplore.ieee.org/document/11491109",
+  "doi": "10.1109/ICCIT68739.2025.11491109",
+  "abstract": "Cross-Site Scripting (XSS) persists as a severe and costly web threat, enabling arbitrary script execution, session hijacking, and data theft. This paper proposes a tailored bidirectional long short-term memory (BiLSTM) model that focuses on the sequential structure of XSS payloads. Trained on 1,831,254 samples with a 60% for train and 40% for test and an internal 40% validation split on the training portion, the detector achieves 99.59% accuracy, 100% precision, 99.36% recall, and a 99.68%F1-score. We benchmark against strong classical base-lines-Logistic Regression, Random Forest, Multinomial Naive Bayes, Decision Tree, and XGBoost-and discuss where sequence modeling offers clear advantages. The findings indicate that sequence-aware deep architectures can deliver robust, scalable XSS detection suitable for modern deployment settings.",
+  "technologies": ["BiLSTM", "Deep Learning", "XSS Detection", "Cybersecurity", "LLM"]
+}
   ];
 
   return (

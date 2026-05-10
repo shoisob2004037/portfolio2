@@ -16,14 +16,14 @@ const Certifications = () => {
       id: "c17",
       title: "Paper Presentation in ICCIT-2025",
       issuer: "ICCIT 2025",
-      image: "/iceccte2026.jpg",
+      image: "/iccit.png",
       highlight: "DeepGuard-XSS: Leveraging Large Language Models with CNN-BiLSTM"
     },
     {
       id: "c18",
       title: "Paper Presentation in ICECTE-2026",
       issuer: "ICECTE 2026",
-      image: "/xss.jpg",
+      image: "/xss.png",
       highlight: "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision XSS Detection"
     },
     {
