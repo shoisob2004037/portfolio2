@@ -15,7 +15,8 @@ import Certifications from "./pages/Certifications";
 import ComingSoon from "./pages/ComingSoon";
 import Publications from "./pages/Publications";
 import Blogs from "./pages/Blogs";
-import BlogDetails from "./pages/BlogDetails"; // Import BlogDetails component
+import BlogDetails from "./pages/BlogDetails"; 
+import News from "./pages/News";
 
 function App() {
   const { darkMode } = useTheme();
@@ -40,6 +41,8 @@ function App() {
           <Route path="blogs/:id" element={<BlogDetails />} /> {/* Dynamic route for blog details */}
           <Route path="*" element={<NotFound />} />
           <Route path="coming" element={<ComingSoon />} />
+          <Route path="news" element={<News />} />
+
         </Route>
       </Routes>
     </div>

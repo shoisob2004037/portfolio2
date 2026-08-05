@@ -27,6 +27,13 @@ const Certifications = () => {
       highlight: "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision XSS Detection"
     },
     {
+      id: "c30",
+      title: "Paper Presentation in PECCII-2026",
+      issuer: "PECCII 2026",
+      image: "/517-01.jpg",
+      highlight: "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication"
+    },
+    {
       id: "c16",
       title: "3rd Place - Project Showcasing",
       issuer: "RUET INNOVISTA 2025",
@@ -41,6 +48,12 @@ const Certifications = () => {
       title: "Full Stack Development with MERN",
       issuer: "Grameenphone Academy",
       image: "/mern.PNG",
+    },
+    {
+      id: "gp-ai",
+      title: "Artificial Intelliigence & Machine Leaning Fundamentals",
+      issuer: "Grameenphone Academy",
+      image: "/ai.jpg",
     },
     {
       id: "c2",

@@ -1,4 +1,4 @@
-// Navbar.jsx - Fixed scrolling and overlapping issues
+// Navbar.jsx - Updated with News Route
 
 "use client";
 
@@ -21,6 +21,7 @@ import {
   Github,
   Linkedin,
   GraduationCap,
+  Newspaper, // Added icon for News
 } from "lucide-react";
 
 const Navbar = () => {
@@ -47,6 +48,7 @@ const Navbar = () => {
 
   const navItems = [
     { to: "/", icon: <Home className="w-5 h-5" />, label: "Home" },
+    { to: "/news", icon: <Newspaper className="w-5 h-5" />, label: "News" }, // Added News section
     { to: "/skills", icon: <Brain className="w-5 h-5" />, label: "Skills" },
     {
       to: "/projects",
@@ -64,19 +66,16 @@ const Navbar = () => {
       label: "Certifications",
     },
     { to: "/hobby", icon: <BookOpen className="w-5 h-5" />, label: "Hobbies" },
-    { to: "/blogs", icon: <BookOpen className="w-5 h-5" />, label: "Blogs" }, // Add this line
-    {
-      to: "/about-me",
-      icon: <Camera className="w-5 h-5" />,
-      label: "Education & Me",
-    },
+    { to: "/blogs", icon: <BookOpen className="w-5 h-5" />, label: "Blogs" },
     { to: "/reviews", icon: <Star className="w-5 h-5" />, label: "Reviews" },
   ];
 
   return (
     <>
       <header
-        className={`sticky top-0 z-50 ${darkMode ? "bg-gray-900" : "bg-cyan-700"} transition-colors duration-300 shadow-lg`}
+        className={`sticky top-0 z-50 ${
+          darkMode ? "bg-gray-900" : "bg-cyan-700"
+        } transition-colors duration-300 shadow-lg`}
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
           {/* Logo */}
@@ -107,7 +106,7 @@ const Navbar = () => {
               )}
             </button>
 
-            {/* Menu Toggle Button - Always visible on all screen sizes */}
+            {/* Menu Toggle Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`p-2 rounded-lg transition-all duration-300 ${
@@ -135,17 +134,21 @@ const Navbar = () => {
         />
       )}
 
-      {/* Sidebar Navigation - Fixed scrolling */}
+      {/* Sidebar Navigation */}
       <nav
         className={`
           fixed top-0 right-0 h-full w-72 sm:w-80 
-          ${darkMode ? "bg-gradient-to-b from-gray-900 to-gray-800" : "bg-gradient-to-b from-cyan-700 to-cyan-800"} 
+          ${
+            darkMode
+              ? "bg-gradient-to-b from-gray-900 to-gray-800"
+              : "bg-gradient-to-b from-cyan-700 to-cyan-800"
+          } 
           shadow-2xl transform transition-transform duration-300 ease-in-out z-50
           flex flex-col
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        {/* Close button inside sidebar - Fixed position */}
+        {/* Close button inside sidebar */}
         <div className="flex-shrink-0 p-4 flex justify-end border-b border-white/10">
           <button
             onClick={() => setIsOpen(false)}
@@ -160,7 +163,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* User Info in Sidebar - Fixed position */}
+        {/* User Info in Sidebar */}
         <div className="flex-shrink-0 p-6 text-center border-b border-white/10">
           <div className="relative inline-block">
             <img
@@ -170,11 +173,13 @@ const Navbar = () => {
             />
           </div>
           <h3
-            className={`mt-3 font-semibold text-lg ${darkMode ? "text-white" : "text-white"}`}
+            className={`mt-3 font-semibold text-lg ${
+              darkMode ? "text-white" : "text-white"
+            }`}
           >
             Mahadi Hasan Shaisob
           </h3>
-          <p className="text-cyan-300 text-sm mt-1">MERN Stack Developer</p>
+          <p className="text-cyan-300 text-sm mt-1">MERN | Researcher</p>
         </div>
 
         {/* Navigation Items - SCROLLABLE AREA */}
@@ -193,7 +198,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Social Links - Fixed at bottom with proper spacing */}
+        {/* Social Links */}
         <div className="flex-shrink-0 pb-6 pt-4 px-6 mt-auto">
           <div className="flex justify-center gap-4 pt-4 border-t border-white/10">
             <SocialLink

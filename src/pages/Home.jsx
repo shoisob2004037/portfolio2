@@ -5,6 +5,7 @@ import { useTheme } from "../context/ThemeContext"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Search, Download, Github, Linkedin, ArrowUp, Send, BookOpen, UserCheck, Users } from "lucide-react"
+import AboutMe from "./AboutMe"
 
 const Home = () => {
   const { darkMode } = useTheme()
@@ -440,6 +441,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <AboutMe darkMode={darkMode} />
 
       {/* Contact Section */}
       <section id="contact" className={`py-20 ${darkMode ? "bg-gray-900" : "bg-gradient-to-b from-white to-cyan-50"}`}>
