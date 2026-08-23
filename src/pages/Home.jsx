@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from "react"
 import { useTheme } from "../context/ThemeContext"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-import { Search, Download, Github, Linkedin, ArrowUp, Send, BookOpen, UserCheck, Users } from "lucide-react"
+import { Search, Download, Github, Linkedin, ArrowUp, Send, BookOpen, UserCheck, Users, Newspaper, Calendar, ChevronRight } from "lucide-react"
 import AboutMe from "./AboutMe"
+import { initialNewsData } from "./News"
 
 const Home = () => {
   const { darkMode } = useTheme()
@@ -23,6 +24,11 @@ const Home = () => {
   const navigate = useNavigate()
   const searchInputRef = useRef(null)
 
+  // Get latest 3 news from the imported data
+  const latestNews = [...initialNewsData]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3)
+
   const phrases = [
     "MERN Stack Web Developer",
     "Researcher",
@@ -30,9 +36,7 @@ const Home = () => {
     "ML & AI Enthusiast"
   ]
 
-  // Enhanced Search Mapping
   const searchMapping = {
-    // Pages
     home: "/",
     expertise: "/skills",
     experties: "/skills",
@@ -51,8 +55,10 @@ const Home = () => {
     contact: "/#contact",
     reviews: "/reviews",
     feedback: "/reviews",
+    news: "/news",
+    updates: "/news",
+    activities: "/news",
 
-    // Projects
     robot: "/projects#p1",
     "multi purpose robot": "/projects#p1",
     arduino: "/projects#p1",
@@ -68,7 +74,6 @@ const Home = () => {
     game: "/projects#p6",
     "rock paper scissors": "/projects#p6",
 
-    // Skills & Technologies
     html: "/expertise",
     css: "/expertise",
     javascript: "/expertise",
@@ -82,7 +87,6 @@ const Home = () => {
     express: "/expertise",
     mongodb: "/expertise",
 
-    // Research & Interests
     ml: "/about-me",
     "machine learning": "/about-me",
     ai: "/about-me",
@@ -99,7 +103,6 @@ const Home = () => {
 
   const allSearchKeys = Object.keys(searchMapping)
 
-  // Match scoring function
   const getMatchScore = (query, key) => {
     const q = query.toLowerCase().trim()
     const k = key.toLowerCase()
@@ -116,7 +119,6 @@ const Home = () => {
     return score > 25 ? score : 0
   }
 
-  // Generate suggestions
   const generateSuggestions = (query) => {
     if (!query || query.trim().length === 0) {
       setSuggestions([])
@@ -138,7 +140,6 @@ const Home = () => {
     setSuggestions(scored)
   }
 
-  // Typing Effect
   useEffect(() => {
     const currentPhrase = phrases[currentPhraseIndex]
 
@@ -163,13 +164,11 @@ const Home = () => {
     return () => clearTimeout(timer)
   }, [typedText, isDeleting, currentPhraseIndex, typingSpeed, phrases])
 
-  // Real-time suggestions
   useEffect(() => {
     generateSuggestions(searchQuery)
     setShowSuggestions(searchQuery.trim().length > 0 && suggestions.length > 0)
   }, [searchQuery])
 
-  // Scroll for back to top
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 300)
@@ -178,7 +177,6 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Click outside to close suggestions
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (searchInputRef.current && !searchInputRef.current.contains(e.target)) {
@@ -199,7 +197,6 @@ const Home = () => {
 
     const query = searchQuery.toLowerCase().trim()
 
-    // Exact match
     if (searchMapping[query]) {
       setSearchError("")
       setShowSuggestions(false)
@@ -207,7 +204,6 @@ const Home = () => {
       return
     }
 
-    // Best fuzzy match
     let bestMatch = null
     let highestScore = 0
 
@@ -279,6 +275,10 @@ const Home = () => {
     })
   }
 
+  const navigateToNews = () => {
+    navigate("/news")
+  }
+
   return (
     <>
       {/* Banner Section */}
@@ -289,7 +289,6 @@ const Home = () => {
         }`}
       >
         <div className="container mx-auto px-4 py-12">
-          {/* Search Bar with Suggestions */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -321,7 +320,6 @@ const Home = () => {
                 </button>
               </div>
 
-              {/* Suggestions Dropdown */}
               {showSuggestions && suggestions.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
@@ -353,7 +351,6 @@ const Home = () => {
             </div>
           </motion.div>
 
-          {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -409,7 +406,6 @@ const Home = () => {
                 />
               </div>
 
-              {/* Social Links */}
               <div className="flex gap-4 mt-8">
                 <SocialLink 
                   href="https://scholar.google.com/citations?user=HoeeAaIAAAAJ&hl=en" 
@@ -441,6 +437,108 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Latest News Section */}
+      <section className={`py-16 ${darkMode ? "bg-gray-800" : "bg-gradient-to-b from-cyan-50 to-white"}`}>
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-2 border ${
+                  darkMode
+                    ? "border-cyan-500/30 text-cyan-400 bg-cyan-500/10"
+                    : "border-cyan-500/20 text-cyan-600 bg-cyan-50"
+                }`}>
+                  <Newspaper className="w-4 h-4" />
+                  <span>Latest Updates</span>
+                </div>
+                <h2 className={`text-3xl font-bold ${darkMode ? "text-white" : "text-gray-900"}`}>
+                  Recent <span className="text-cyan-500">News & Activities</span>
+                </h2>
+              </div>
+              <button
+                onClick={navigateToNews}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  darkMode
+                    ? "bg-cyan-600 hover:bg-cyan-700 text-white"
+                    : "bg-cyan-500 hover:bg-cyan-600 text-white"
+                } shadow-md hover:shadow-lg`}
+              >
+                <span>See All Updates</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {latestNews.map((news, index) => (
+                <motion.div
+                  key={news.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className={`rounded-xl p-6 border transition-all duration-300 ${
+                    darkMode
+                      ? "bg-gray-700/50 border-gray-600 hover:border-cyan-500/40"
+                      : "bg-white border-gray-200 hover:border-cyan-400 hover:shadow-md"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                      darkMode
+                        ? "text-cyan-400 bg-cyan-500/10 border border-cyan-500/20"
+                        : "text-cyan-600 bg-cyan-50 border border-cyan-200"
+                    }`}>
+                      {news.type}
+                    </span>
+                    <div className={`flex items-center gap-1.5 text-xs font-medium ${
+                      darkMode ? "text-gray-400" : "text-gray-500"
+                    }`}>
+                      <Calendar className="w-3.5 h-3.5 text-cyan-500" />
+                      <span>{news.formattedDate}</span>
+                    </div>
+                  </div>
+
+                  <h3 className={`text-base font-bold mb-2 line-clamp-2 ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  }`}>
+                    {news.title}
+                  </h3>
+
+                  <p className={`text-sm leading-relaxed mb-4 line-clamp-3 ${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  }`}>
+                    {news.description}
+                  </p>
+
+                  <div className={`flex flex-wrap gap-1.5 pt-3 border-t ${
+                    darkMode ? "border-gray-600/50" : "border-gray-100"
+                  }`}>
+                    {news.tags.slice(0, 3).map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className={`text-[10px] font-medium px-2.5 py-0.5 rounded ${
+                          darkMode
+                            ? "bg-gray-600/50 text-gray-400"
+                            : "bg-gray-100 text-gray-500"
+                        }`}
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <AboutMe darkMode={darkMode} />
 
       {/* Contact Section */}
@@ -593,15 +691,11 @@ const SocialLink = ({ href, icon, title }) => {
       whileHover={{ scale: 1.1, rotate: 5 }}
       whileTap={{ scale: 0.9 }}
       title={title}
-      className={`
-        flex items-center justify-center w-10 h-10 rounded-full 
-        ${
-          darkMode
-            ? "bg-gray-800 text-cyan-400 hover:bg-gray-700 hover:text-cyan-300"
-            : "bg-white/90 text-cyan-600 hover:bg-white hover:text-cyan-500"
-        }
-        transition-all duration-300 shadow-lg
-      `}
+      className={`flex items-center justify-center w-10 h-10 rounded-full ${
+        darkMode
+          ? "bg-gray-800 text-cyan-400 hover:bg-gray-700 hover:text-cyan-300"
+          : "bg-white/90 text-cyan-600 hover:bg-white hover:text-cyan-500"
+      } transition-all duration-300 shadow-lg`}
     >
       {icon}
     </motion.a>
