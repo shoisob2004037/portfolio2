@@ -30,7 +30,7 @@ const Navbar = () => {
     { to: "/projects", icon: <ListChecks className="w-4 h-4" />, label: "Projects" },
     { to: "/publications", icon: <FileText className="w-4 h-4" />, label: "Publications" },
     { to: "/certifications", icon: <Award className="w-4 h-4" />, label: "Certifications" },
-    { to: "/hobby", icon: <BookOpen className="w-4 h-4" />, label: "Hobbies" },
+   // { to: "/hobby", icon: <BookOpen className="w-4 h-4" />, label: "Hobbies" },
     { to: "/blogs", icon: <Camera className="w-4 h-4" />, label: "Blogs" },
   ];
 

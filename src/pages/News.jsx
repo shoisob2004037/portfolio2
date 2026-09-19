@@ -15,6 +15,34 @@ import {
 
 const initialNewsData = [
   {
+    id: "news-16",
+    date: "2026-09-05",
+    formattedDate: "September 05, 2026",
+    title: "Joined as Research Supervisor & Mentor at ResearchBuddy AI",
+    type: "Academic Appointment",
+    description:
+      'Joined ResearchBuddy AI platform as a Research Supervisor and Mentor, leading the "Cybersecurity and Cyber-Physical Systems Security Lab". Currently supervising 15 students, mentoring them on the fundamentals of research methodology, scholarly writing, and the publication process in the domains of cybersecurity and cyber-physical systems security.',
+    tags: [
+      "Research Supervision",
+      "Mentorship",
+      "Cybersecurity",
+      "Cyber-Physical Systems",
+      "ResearchBuddy AI",
+    ],
+  },
+    {
+    id: "news-15",
+    date: "2026-08-27",
+    formattedDate: "August 27, 2026",
+    title: "Paper Officially Published on IEEE Xplore",
+    type: "Publication",
+    description:
+      'Our paper titled "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication" is now officially published and indexed on IEEE Xplore.',
+    link: "https://ieeexplore.ieee.org/document/11661841",
+    linkText: "Read Paper on IEEE Xplore",
+    tags: ["IEEE Xplore", "Antenna Design", "5G", "Satellite Communication", "Indexed Paper"],
+  },
+  {
     id: "news-14",
     date: "2026-08-14",
     formattedDate: "August 14, 2026",
