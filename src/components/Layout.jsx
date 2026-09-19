@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom"
-import Navbar from "./Navbar"
-import Footer from "./Footer"
-import BackToTop from "./BackToTop"
+import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import BackToTop from "./BackToTop";
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-primary">
       <Navbar />
       <main className="flex-grow">
         <Outlet />
@@ -13,7 +13,7 @@ const Layout = () => {
       <Footer />
       <BackToTop />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

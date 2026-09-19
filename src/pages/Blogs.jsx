@@ -1,4 +1,3 @@
-// pages/Blogs.jsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -16,22 +15,15 @@ const Blogs = () => {
 
   const categories = ["All", "Web Development", "Computer Vision", "Research", "AI/ML"];
 
-  // Fetch blog posts from JSON file
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
-        // Use absolute path from public folder
-        const response = await fetch('/data/blogPosts.json');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        const response = await fetch("/data/blogPosts.json");
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         setBlogPosts(data.posts || []);
       } catch (error) {
-        console.error('Error loading blog posts:', error);
-        // Fallback to empty array
+        console.error("Error loading blog posts:", error);
         setBlogPosts([]);
       } finally {
         setLoading(false);
@@ -42,84 +34,64 @@ const Blogs = () => {
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
-    const matchesSearch = searchQuery === "" || 
+    const matchesSearch =
+      searchQuery === "" ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
   if (loading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${darkMode ? "bg-gray-900" : "bg-gradient-to-b from-cyan-50 to-white"}`}>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-cyan-500 mx-auto mb-4"></div>
-          <p className={`${darkMode ? "text-gray-300" : "text-gray-600"}`}>Loading blog posts...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-[var(--border-color)] border-t-[var(--accent)] mx-auto mb-4"></div>
+          <p className="text-[var(--text-secondary)]">Loading blog posts...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? "bg-gray-900" : "bg-gradient-to-b from-cyan-50 to-white"}`}>
+    <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <h1 className={`text-4xl font-bold ${darkMode ? "text-white" : "text-gray-900"} mb-4`}>
-            <span className="relative inline-block">
-              My Blog
-              <span className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></span>
-            </span>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <div className="section-label mb-3 inline-flex">
+            <Tag className="w-3.5 h-3.5" />
+            <span>Blog</span>
+          </div>
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
+            My Blog
           </h1>
-          <p className={`text-lg max-w-2xl mx-auto ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+          <div className="academic-divider"></div>
+          <p className="text-base max-w-2xl mx-auto text-[var(--text-secondary)] mt-4">
             Sharing my learning journey, project deep-dives, and technical insights
           </p>
         </motion.div>
 
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-8"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-8">
           <div className="relative">
-            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${darkMode ? "text-gray-400" : "text-gray-500"}`} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
             <input
               type="text"
               placeholder="Search blogs by title, content, or tags..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full pl-12 pr-4 py-4 rounded-xl ${
-                darkMode
-                  ? "bg-gray-800 border border-gray-700 text-white focus:border-cyan-500"
-                  : "bg-white border border-gray-200 text-gray-900 focus:border-cyan-500"
-              } focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all duration-300`}
+              className="academic-input pl-11"
             />
           </div>
         </motion.div>
 
-        {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap gap-3 mb-12"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-wrap gap-2 mb-12">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 border ${
                 selectedCategory === category
-                  ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
-                  : darkMode
-                  ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                  : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  ? "bg-[var(--accent)] text-white border-[var(--accent)]"
+                  : "bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-color)] hover:border-[var(--accent)]"
               }`}
             >
               {category}
@@ -127,87 +99,57 @@ const Blogs = () => {
           ))}
         </motion.div>
 
-        {/* Blog Posts - One Column Layout */}
         {filteredPosts.length > 0 ? (
-          <div className="space-y-8">
+          <div className="space-y-6">
             {filteredPosts.map((post, index) => (
               <motion.article
                 key={post.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className={`rounded-xl overflow-hidden shadow-lg transition-all duration-300 ${
-                  darkMode ? "bg-gray-800" : "bg-white"
-                }`}
+                className="academic-card overflow-hidden p-0"
               >
                 <Link to={`/blogs/${post.id}`} className="block">
                   <div className="flex flex-col md:flex-row">
-                    {/* Image Section */}
-                    <div className="md:w-2/5 h-64 md:h-auto overflow-hidden">
-                      <img
-                        src={post.image || "/placeholder.svg"}
-                        alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                      />
+                    <div className="md:w-2/5 h-56 md:h-auto overflow-hidden bg-[var(--bg-secondary)]">
+                      <img src={post.image || "/placeholder.svg"} alt={post.title} loading="lazy" className="w-full h-full object-cover" />
                     </div>
 
-                    {/* Content Section */}
-                    <div className="flex-1 p-6 md:p-8">
-                      {/* Category Badge */}
+                    <div className="flex-1 p-6">
                       <div className="mb-3">
-                        <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
+                        <span className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-[var(--accent-light)] text-[var(--accent)] border border-[var(--border-color)]">
                           {post.category}
                         </span>
                       </div>
 
-                      {/* Title */}
-                      <h2 className={`text-2xl md:text-3xl font-bold mb-3 ${darkMode ? "text-white" : "text-gray-900"}`}>
+                      <h2 className="font-serif text-xl md:text-2xl font-bold mb-3 text-[var(--text-primary)]">
                         {post.title}
                       </h2>
 
-                      {/* Meta Info */}
-                      <div className="flex flex-wrap items-center gap-4 text-sm mb-4">
-                        <span className="flex items-center gap-1 text-cyan-500">
-                          <Calendar className="w-4 h-4" />
-                          {post.date}
-                        </span>
-                        <span className="flex items-center gap-1 text-cyan-500">
-                          <Clock className="w-4 h-4" />
-                          {post.readTime}
-                        </span>
+                      <div className="flex flex-wrap items-center gap-4 text-xs mb-4 text-[var(--text-muted)]">
+                        <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{post.date}</span>
+                        <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{post.readTime}</span>
                       </div>
 
-                      {/* Excerpt */}
-                      <p className={`mb-4 leading-relaxed line-clamp-3 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                      <p className="mb-4 text-sm leading-relaxed line-clamp-3 text-[var(--text-secondary)]">
                         {post.excerpt}
                       </p>
 
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2 mb-4">
+                      <div className="flex flex-wrap gap-1.5 mb-4">
                         {post.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full ${
-                              darkMode
-                                ? "bg-gray-700 text-cyan-400"
-                                : "bg-cyan-100 text-cyan-700"
-                            }`}
-                          >
-                            <Tag className="w-3 h-3" />
-                            #{tag}
+                          <span key={tag} className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
+                            <Tag className="w-2.5 h-2.5" />#{tag}
                           </span>
                         ))}
                         {post.tags.length > 3 && (
-                          <span className={`text-xs px-2 py-1 rounded-full ${darkMode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-600"}`}>
+                          <span className="text-[10px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
                             +{post.tags.length - 3} more
                           </span>
                         )}
                       </div>
 
-                      {/* Read More */}
                       <div className="flex justify-end">
-                        <span className="inline-flex items-center gap-1 text-cyan-500 font-semibold hover:gap-2 transition-all duration-300">
+                        <span className="inline-flex items-center gap-1 text-[var(--accent)] text-sm font-semibold">
                           Read More <ChevronRight className="w-4 h-4" />
                         </span>
                       </div>
@@ -219,7 +161,7 @@ const Blogs = () => {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className={`text-xl ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+            <p className="text-lg text-[var(--text-muted)]">
               No blog posts found matching your criteria.
             </p>
           </div>
