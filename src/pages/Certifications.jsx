@@ -11,33 +11,139 @@ const Certifications = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const certifications = [
-    { id: "c17", title: "Paper Presentation in ICCIT-2025", issuer: "ICCIT 2025", image: "/iccit.png", highlight: "DeepGuard-XSS: Leveraging Large Language Models with CNN-BiLSTM" },
-    { id: "c18", title: "Paper Presentation in ICECTE-2026", issuer: "ICECTE 2026", image: "/xss.png", highlight: "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision XSS Detection" },
-    { id: "c30", title: "Paper Presentation in PECCII-2026", issuer: "PECCII 2026", image: "/517-01.jpg", highlight: "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication" },
-    { id: "c16", title: "3rd Place - Project Showcasing", issuer: "RUET INNOVISTA 2025", image: "/project.jpg", highlight: "Faculty of Electrical & Computer Engineering" },
-    { id: "c1", title: "Full Stack Development with MERN", issuer: "Grameenphone Academy", image: "/mern.PNG" },
-    { id: "gp-ai", title: "Artificial Intelliigence & Machine Leaning Fundamentals", issuer: "Grameenphone Academy", image: "/ai.jpg" },
-    { id: "c2", title: "Introduction to Web Development with HTML, CSS, JavaScript", issuer: "IBM (Coursera)", image: "/htmlcssjs.PNG" },
-    { id: "c3", title: "Getting Started with Git and GitHub", issuer: "IBM (Coursera)", image: "/gitibm.PNG" },
-    { id: "c4", title: "Master HTML and CSS by Building Real-World Projects", issuer: "Udemy", image: "/htmlcss.PNG" },
-    { id: "c5", title: "Master Git and GitHub – Beginner to Expert", issuer: "Udemy", image: "/gitudemy.PNG" },
-    { id: "c6", title: "React Basics", issuer: "Meta (Coursera)", image: "/react.PNG" },
-    { id: "c7", title: "JavaScript Certification Test", issuer: "Complete Coding by Prashant Sir", image: "/js.PNG" },
-    { id: "c8", title: "HTML Certification Test", issuer: "Complete Coding by Prashant Sir", image: "/html.PNG" },
-    { id: "c9", title: "CSS Certification Test", issuer: "Complete Coding by Prashant Sir", image: "/cssc.PNG" },
-    { id: "c10", title: "VSCode Shortcuts and Extensions for Web Developer", issuer: "Udemy", image: "/vsc.PNG" },
-    { id: "c11", title: "Microsoft Excel: Beginner to Advanced", issuer: "Grameenphone Academy", image: "/excelc.PNG" },
-    { id: "c12", title: "Microsoft PowerPoint: Advanced Course", issuer: "Grameenphone Academy", image: "/ppc.PNG" },
-    { id: "c13", title: "CV Writing for Professionals", issuer: "Grameenphone Academy", image: "/cv.PNG" },
-    { id: "c14", title: "Create and Design Digital Products using Canva", issuer: "Coursera", image: "/canvac.PNG" },
+    {
+      id: "c17",
+      title: "Paper Presentation in ICCIT-2025",
+      issuer: "ICCIT 2025",
+      image: "/iccit.png",
+      highlight:
+        "DeepGuard-XSS: Leveraging Large Language Models with CNN-BiLSTM",
+    },
+    {
+      id: "c18",
+      title: "Paper Presentation in ICECTE-2026",
+      issuer: "ICECTE 2026",
+      image: "/xss.png",
+      highlight:
+        "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision XSS Detection",
+    },
+    {
+      id: "c30",
+      title: "Paper Presentation in PECCII-2026",
+      issuer: "PECCII 2026",
+      image: "/517-01.jpg",
+      highlight:
+        "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication",
+    },
+    {
+      id: "c16",
+      title: "3rd Place - Project Showcasing",
+      issuer: "RUET INNOVISTA 2025",
+      image: "/project.jpg",
+      highlight: "Faculty of Electrical & Computer Engineering",
+    },
+    {
+      id: "c1",
+      title: "Full Stack Development with MERN",
+      issuer: "Grameenphone Academy",
+      image: "/mern.PNG",
+    },
+    {
+      id: "gp-ai",
+      title: "Artificial Intelliigence & Machine Leaning Fundamentals",
+      issuer: "Grameenphone Academy",
+      image: "/ai.jpg",
+    },
+    {
+      id: "c2",
+      title: "Introduction to Web Development with HTML, CSS, JavaScript",
+      issuer: "IBM (Coursera)",
+      image: "/htmlcssjs.PNG",
+    },
+    {
+      id: "c3",
+      title: "Getting Started with Git and GitHub",
+      issuer: "IBM (Coursera)",
+      image: "/gitibm.PNG",
+    },
+    {
+      id: "c4",
+      title: "Master HTML and CSS by Building Real-World Projects",
+      issuer: "Udemy",
+      image: "/htmlcss.PNG",
+    },
+    {
+      id: "c5",
+      title: "Master Git and GitHub – Beginner to Expert",
+      issuer: "Udemy",
+      image: "/gitudemy.PNG",
+    },
+    {
+      id: "c6",
+      title: "React Basics",
+      issuer: "Meta (Coursera)",
+      image: "/react.PNG",
+    },
+    {
+      id: "c7",
+      title: "JavaScript Certification Test",
+      issuer: "Complete Coding by Prashant Sir",
+      image: "/js.PNG",
+    },
+    {
+      id: "c8",
+      title: "HTML Certification Test",
+      issuer: "Complete Coding by Prashant Sir",
+      image: "/html.PNG",
+    },
+    {
+      id: "c9",
+      title: "CSS Certification Test",
+      issuer: "Complete Coding by Prashant Sir",
+      image: "/cssc.PNG",
+    },
+    {
+      id: "c10",
+      title: "VSCode Shortcuts and Extensions for Web Developer",
+      issuer: "Udemy",
+      image: "/vsc.PNG",
+    },
+    {
+      id: "c11",
+      title: "Microsoft Excel: Beginner to Advanced",
+      issuer: "Grameenphone Academy",
+      image: "/excelc.PNG",
+    },
+    {
+      id: "c12",
+      title: "Microsoft PowerPoint: Advanced Course",
+      issuer: "Grameenphone Academy",
+      image: "/ppc.PNG",
+    },
+    {
+      id: "c13",
+      title: "CV Writing for Professionals",
+      issuer: "Grameenphone Academy",
+      image: "/cv.PNG",
+    },
+    {
+      id: "c14",
+      title: "Create and Design Digital Products using Canva",
+      issuer: "Coursera",
+      image: "/canvac.PNG",
+    },
   ];
 
-  const handleImageClick = (image, index) => { setSelectedImage(image); setSelectedIndex(index); };
+  const handleImageClick = (image, index) => {
+    setSelectedImage(image);
+    setSelectedIndex(index);
+  };
   const handleCloseModal = () => setSelectedImage(null);
 
   const handlePrevImage = (e) => {
     e.stopPropagation();
-    const newIndex = (selectedIndex - 1 + certifications.length) % certifications.length;
+    const newIndex =
+      (selectedIndex - 1 + certifications.length) % certifications.length;
     setSelectedImage(certifications[newIndex].image);
     setSelectedIndex(newIndex);
   };
@@ -78,7 +184,8 @@ const Certifications = () => {
           </h1>
           <div className="academic-divider"></div>
           <p className="text-base max-w-2xl mx-auto text-[var(--text-secondary)] mt-4">
-            Academic contributions, research presentations, project awards, and professional certifications
+            Academic contributions, research presentations, project awards, and
+            professional certifications
           </p>
         </motion.div>
 
@@ -144,20 +251,37 @@ const Certifications = () => {
               className="relative max-w-5xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={selectedImage} alt="Certificate" className="max-h-[90vh] w-auto mx-auto rounded-lg shadow-2xl object-contain" />
+              <img
+                src={selectedImage}
+                alt="Certificate"
+                className="max-h-[90vh] w-auto mx-auto rounded-lg shadow-2xl object-contain"
+              />
 
-              <button onClick={handlePrevImage} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all" aria-label="Previous">
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all"
+                aria-label="Previous"
+              >
                 <ChevronLeft className="w-6 h-6" />
               </button>
-              <button onClick={handleNextImage} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all" aria-label="Next">
+              <button
+                onClick={handleNextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all"
+                aria-label="Next"
+              >
                 <ChevronRight className="w-6 h-6" />
               </button>
-              <button onClick={handleCloseModal} className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all" aria-label="Close">
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white p-3 rounded-full transition-all"
+                aria-label="Close"
+              >
                 <X className="w-6 h-6" />
               </button>
 
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/70 text-white px-6 py-2 rounded-full text-xs font-medium shadow-lg max-w-[90%] text-center">
-                {certifications[selectedIndex].title} — {certifications[selectedIndex].issuer}
+                {certifications[selectedIndex].title} —{" "}
+                {certifications[selectedIndex].issuer}
               </div>
             </motion.div>
           </motion.div>

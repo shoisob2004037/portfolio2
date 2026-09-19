@@ -3,8 +3,17 @@
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "framer-motion";
 import {
-  GraduationCap, Target, Microscope, BookOpen, Users, Globe,
-  Heart, CheckCircle, Calendar, ArrowDown, Award
+  GraduationCap,
+  Target,
+  Microscope,
+  BookOpen,
+  Users,
+  Globe,
+  Heart,
+  CheckCircle,
+  Calendar,
+  ArrowDown,
+  Award,
 } from "lucide-react";
 
 const AboutMe = () => {
@@ -31,7 +40,8 @@ const AboutMe = () => {
             </h2>
             <div className="academic-divider"></div>
             <p className="mt-4 text-sm md:text-base text-[var(--text-secondary)]">
-              My academic timeline from university level down to school qualifications
+              My academic timeline from university level down to school
+              qualifications
             </p>
           </motion.div>
 
@@ -59,7 +69,9 @@ const AboutMe = () => {
                       </motion.div>
                     </div>
 
-                    <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${isEven ? "" : "md:flex-row-reverse"}`}>
+                    <div
+                      className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${isEven ? "" : "md:flex-row-reverse"}`}
+                    >
                       <motion.div
                         initial={{ opacity: 0, x: isEven ? -40 : 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -68,9 +80,15 @@ const AboutMe = () => {
                         className={`pl-16 md:pl-0 ${isEven ? "md:pr-12 md:text-right" : "md:col-start-2 md:pl-12 md:text-left"}`}
                       >
                         <div className="academic-card">
-                          <div className={`flex items-center gap-3 mb-4 ${isEven ? "md:justify-end" : "md:justify-start"}`}>
+                          <div
+                            className={`flex items-center gap-3 mb-4 ${isEven ? "md:justify-end" : "md:justify-start"}`}
+                          >
                             <div className="w-12 h-12 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center overflow-hidden flex-shrink-0">
-                              <img src={item.icon || "/placeholder.svg"} alt={item.title} className="w-9 h-9 rounded object-cover" />
+                              <img
+                                src={item.icon || "/placeholder.svg"}
+                                alt={item.title}
+                                className="w-9 h-9 rounded object-cover"
+                              />
                             </div>
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
                               <Calendar className="w-3 h-3 text-[var(--accent)]" />
@@ -97,7 +115,11 @@ const AboutMe = () => {
                       <div className="flex justify-start pl-4 md:pl-0 md:justify-center my-4 relative z-10">
                         <motion.div
                           animate={{ y: [0, 5, 0] }}
-                          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                          transition={{
+                            duration: 1.8,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
                           className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--accent-light)] border border-[var(--border-color)] text-[var(--accent)]"
                         >
                           <ArrowDown className="w-4 h-4" />
@@ -135,22 +157,28 @@ const AboutMe = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <GoalItem delay={0.1} icon={<Microscope className="w-4 h-4" />}>
-              Become a renowned researcher in the fields of Cybersecurity, AI, and Machine Learning
+              Become a renowned researcher in the fields of Cybersecurity, AI,
+              and Machine Learning
             </GoalItem>
             <GoalItem delay={0.2} icon={<Globe className="w-4 h-4" />}>
-              Pursue higher studies abroad to expand research capabilities and global perspective
+              Pursue higher studies abroad to expand research capabilities and
+              global perspective
             </GoalItem>
             <GoalItem delay={0.3} icon={<BookOpen className="w-4 h-4" />}>
-              Contribute to cutting-edge research in Autonomous Vehicles and Cyber-Physical Systems
+              Contribute to cutting-edge research in Autonomous Vehicles and
+              Cyber-Physical Systems
             </GoalItem>
             <GoalItem delay={0.4} icon={<Users className="w-4 h-4" />}>
-              Enter the teaching profession to inspire and mentor the next generation of technologists
+              Enter the teaching profession to inspire and mentor the next
+              generation of technologists
             </GoalItem>
             <GoalItem delay={0.5} icon={<GraduationCap className="w-4 h-4" />}>
-              Complete PhD and establish a research lab focused on AI-driven security solutions
+              Complete PhD and establish a research lab focused on AI-driven
+              security solutions
             </GoalItem>
             <GoalItem delay={0.6} icon={<Heart className="w-4 h-4" />}>
-              Bridge the gap between academia and industry by developing real-world AI applications
+              Bridge the gap between academia and industry by developing
+              real-world AI applications
             </GoalItem>
           </div>
         </motion.div>
@@ -160,10 +188,34 @@ const AboutMe = () => {
 };
 
 const educationData = [
-  { date: "4 August 2026", title: "BSc in ETE", institution: "Rajshahi University of Engineering and Technology", grade: "CGPA : 3.76", icon: "/ruet.png" },
-  { date: "2020", title: "HSC", institution: "Govt. Science College", grade: "GPA : 5.00", icon: "/gsc.png" },
-  { date: "2018", title: "SSC", institution: "Chatkhil P.G. Govt. High School", grade: "GPA : 5.00", icon: "/sc1.jpg" },
-  { date: "2015", title: "JSC", institution: "Chatkhil P.G. Govt. High School", grade: "GPA : 5.00", icon: "/sc1.jpg" },
+  {
+    date: "4 August 2026",
+    title: "BSc in ETE",
+    institution: "Rajshahi University of Engineering and Technology",
+    grade: "CGPA : 3.76",
+    icon: "/ruet.png",
+  },
+  {
+    date: "2020",
+    title: "HSC",
+    institution: "Govt. Science College",
+    grade: "GPA : 5.00",
+    icon: "/gsc.png",
+  },
+  {
+    date: "2018",
+    title: "SSC",
+    institution: "Chatkhil P.G. Govt. High School",
+    grade: "GPA : 5.00",
+    icon: "/sc1.jpg",
+  },
+  {
+    date: "2015",
+    title: "JSC",
+    institution: "Chatkhil P.G. Govt. High School",
+    grade: "GPA : 5.00",
+    icon: "/sc1.jpg",
+  },
 ];
 
 const GoalItem = ({ children, delay = 0, icon }) => (

@@ -14,14 +14,23 @@ const ComingSoon = () => {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1, rotate: 360 }}
-          transition={{ delay: 0.3, type: "spring", stiffness: 260, damping: 20 }}
+          transition={{
+            delay: 0.3,
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+          }}
           className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-[var(--accent-light)] text-[var(--accent)]"
         >
           <Clock className="w-10 h-10" />
         </motion.div>
 
-        <h1 className="font-serif text-4xl font-bold mb-2 text-[var(--accent)]">Coming Soon</h1>
-        <h2 className="font-serif text-xl font-semibold mb-4 text-[var(--text-primary)]">Under Development</h2>
+        <h1 className="font-serif text-4xl font-bold mb-2 text-[var(--accent)]">
+          Coming Soon
+        </h1>
+        <h2 className="font-serif text-xl font-semibold mb-4 text-[var(--text-primary)]">
+          Under Development
+        </h2>
         <p className="mb-8 text-base text-[var(--text-secondary)]">
           This project is being built. Stay connected for updates!
         </p>

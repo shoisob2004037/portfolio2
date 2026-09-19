@@ -13,13 +13,20 @@ const Blogs = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categories = ["All", "Web Development", "Computer Vision", "Research", "AI/ML"];
+  const categories = [
+    "All",
+    "Web Development",
+    "Computer Vision",
+    "Research",
+    "AI/ML",
+  ];
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
         const response = await fetch("/data/blogPosts.json");
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         setBlogPosts(data.posts || []);
       } catch (error) {
@@ -33,12 +40,15 @@ const Blogs = () => {
   }, []);
 
   const filteredPosts = blogPosts.filter((post) => {
-    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch =
       searchQuery === "" ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      post.tags.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
     return matchesCategory && matchesSearch;
   });
 
@@ -56,7 +66,11 @@ const Blogs = () => {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
           <div className="section-label mb-3 inline-flex">
             <Tag className="w-3.5 h-3.5" />
             <span>Blog</span>
@@ -66,11 +80,17 @@ const Blogs = () => {
           </h1>
           <div className="academic-divider"></div>
           <p className="text-base max-w-2xl mx-auto text-[var(--text-secondary)] mt-4">
-            Sharing my learning journey, project deep-dives, and technical insights
+            Sharing my learning journey, project deep-dives, and technical
+            insights
           </p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-8"
+        >
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
             <input
@@ -83,7 +103,12 @@ const Blogs = () => {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-wrap gap-2 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-wrap gap-2 mb-12"
+        >
           {categories.map((category) => (
             <button
               key={category}
@@ -112,7 +137,12 @@ const Blogs = () => {
                 <Link to={`/blogs/${post.id}`} className="block">
                   <div className="flex flex-col md:flex-row">
                     <div className="md:w-2/5 h-56 md:h-auto overflow-hidden bg-[var(--bg-secondary)]">
-                      <img src={post.image || "/placeholder.svg"} alt={post.title} loading="lazy" className="w-full h-full object-cover" />
+                      <img
+                        src={post.image || "/placeholder.svg"}
+                        alt={post.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
                     <div className="flex-1 p-6">
@@ -127,8 +157,14 @@ const Blogs = () => {
                       </h2>
 
                       <div className="flex flex-wrap items-center gap-4 text-xs mb-4 text-[var(--text-muted)]">
-                        <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{post.date}</span>
-                        <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{post.readTime}</span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {post.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" />
+                          {post.readTime}
+                        </span>
                       </div>
 
                       <p className="mb-4 text-sm leading-relaxed line-clamp-3 text-[var(--text-secondary)]">
@@ -137,7 +173,10 @@ const Blogs = () => {
 
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {post.tags.slice(0, 3).map((tag) => (
-                          <span key={tag} className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
+                          <span
+                            key={tag}
+                            className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+                          >
                             <Tag className="w-2.5 h-2.5" />#{tag}
                           </span>
                         ))}

@@ -6,8 +6,20 @@ import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Search, Download, Github, Linkedin, ArrowUp, Send, BookOpen,
-  UserCheck, Users, Newspaper, Calendar, ChevronRight, Star, Quote
+  Search,
+  Download,
+  Github,
+  Linkedin,
+  ArrowUp,
+  Send,
+  BookOpen,
+  UserCheck,
+  Users,
+  Newspaper,
+  Calendar,
+  ChevronRight,
+  Star,
+  Quote,
 } from "lucide-react";
 import AboutMe from "./AboutMe";
 import { initialNewsData } from "./News";
@@ -44,27 +56,64 @@ const Home = () => {
   ];
 
   const searchMapping = {
-    home: "/", expertise: "/skills", experties: "/skills", skills: "/expertise",
-    projects: "/projects", portfolio: "/projects", hobby: "/hobby", hobbies: "/hobby",
-    photography: "/hobby", reading: "/hobby", books: "/hobby", travel: "/hobby",
-    about: "/about-me", "about me": "/about-me", education: "/about-me",
-    contact: "/#contact", reviews: "/reviews", feedback: "/reviews",
-    news: "/news", updates: "/news", activities: "/news",
-    robot: "/projects#p1", "multi purpose robot": "/projects#p1", arduino: "/projects#p1",
-    gallery: "/projects#p2", "photo gallery": "/projects#p2", slider: "/projects#p2",
-    weather: "/projects#p3", "weather scout": "/projects#p3",
-    recipe: "/projects#p4", "cooking recipe": "/projects#p4",
-    food: "/projects#p5", "food ordering": "/projects#p5",
-    game: "/projects#p6", "rock paper scissors": "/projects#p6",
-    html: "/expertise", css: "/expertise", javascript: "/expertise", react: "/expertise",
-    bootstrap: "/expertise", tailwind: "/expertise", firebase: "/expertise",
-    mern: "/expertise", "mern stack": "/expertise", node: "/expertise",
-    express: "/expertise", mongodb: "/expertise",
-    ml: "/about-me", "machine learning": "/about-me", ai: "/about-me",
-    "artificial intelligence": "/about-me", research: "/about-me",
-    cybersecurity: "/about-me", "cyber security": "/about-me",
-    "autonomous vehicle": "/about-me", "autonomous vehicles": "/about-me",
-    "image processing": "/about-me", "cyber physical": "/about-me",
+    home: "/",
+    expertise: "/skills",
+    experties: "/skills",
+    skills: "/expertise",
+    projects: "/projects",
+    portfolio: "/projects",
+    hobby: "/hobby",
+    hobbies: "/hobby",
+    photography: "/hobby",
+    reading: "/hobby",
+    books: "/hobby",
+    travel: "/hobby",
+    about: "/about-me",
+    "about me": "/about-me",
+    education: "/about-me",
+    contact: "/#contact",
+    reviews: "/reviews",
+    feedback: "/reviews",
+    news: "/news",
+    updates: "/news",
+    activities: "/news",
+    robot: "/projects#p1",
+    "multi purpose robot": "/projects#p1",
+    arduino: "/projects#p1",
+    gallery: "/projects#p2",
+    "photo gallery": "/projects#p2",
+    slider: "/projects#p2",
+    weather: "/projects#p3",
+    "weather scout": "/projects#p3",
+    recipe: "/projects#p4",
+    "cooking recipe": "/projects#p4",
+    food: "/projects#p5",
+    "food ordering": "/projects#p5",
+    game: "/projects#p6",
+    "rock paper scissors": "/projects#p6",
+    html: "/expertise",
+    css: "/expertise",
+    javascript: "/expertise",
+    react: "/expertise",
+    bootstrap: "/expertise",
+    tailwind: "/expertise",
+    firebase: "/expertise",
+    mern: "/expertise",
+    "mern stack": "/expertise",
+    node: "/expertise",
+    express: "/expertise",
+    mongodb: "/expertise",
+    ml: "/about-me",
+    "machine learning": "/about-me",
+    ai: "/about-me",
+    "artificial intelligence": "/about-me",
+    research: "/about-me",
+    cybersecurity: "/about-me",
+    "cyber security": "/about-me",
+    "autonomous vehicle": "/about-me",
+    "autonomous vehicles": "/about-me",
+    "image processing": "/about-me",
+    "cyber physical": "/about-me",
     "cyber-physical": "/about-me",
   };
 
@@ -75,7 +124,8 @@ const Home = () => {
     const k = key.toLowerCase();
     if (k === q) return 100;
     if (k.includes(q) || q.includes(k)) return 80;
-    if (k.split(" ").some((word) => q.includes(word) || word.includes(q))) return 60;
+    if (k.split(" ").some((word) => q.includes(word) || word.includes(q)))
+      return 60;
     let matches = 0;
     for (let char of q) if (k.includes(char)) matches++;
     const score = (matches / Math.max(q.length, 1)) * 50;
@@ -89,7 +139,11 @@ const Home = () => {
     }
     const q = query.toLowerCase().trim();
     const scored = allSearchKeys
-      .map((key) => ({ key, path: searchMapping[key], score: getMatchScore(q, key) }))
+      .map((key) => ({
+        key,
+        path: searchMapping[key],
+        score: getMatchScore(q, key),
+      }))
       .filter((item) => item.score > 25)
       .sort((a, b) => b.score - a.score)
       .slice(0, 6);
@@ -130,7 +184,10 @@ const Home = () => {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (searchInputRef.current && !searchInputRef.current.contains(e.target)) {
+      if (
+        searchInputRef.current &&
+        !searchInputRef.current.contains(e.target)
+      ) {
         setShowSuggestions(false);
       }
     };
@@ -142,7 +199,11 @@ const Home = () => {
   useEffect(() => {
     const fetchHomeReviews = async () => {
       try {
-        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"), limit(3));
+        const q = query(
+          collection(db, "reviews"),
+          orderBy("createdAt", "desc"),
+          limit(3),
+        );
         const snap = await getDocs(q);
         const data = [];
         snap.forEach((doc) => data.push({ id: doc.id, ...doc.data() }));
@@ -159,31 +220,48 @@ const Home = () => {
 
   const handleSearch = (e) => {
     e?.preventDefault();
-    if (!searchQuery.trim()) { setSearchError("Please enter a search term"); return; }
+    if (!searchQuery.trim()) {
+      setSearchError("Please enter a search term");
+      return;
+    }
     const query = searchQuery.toLowerCase().trim();
     if (searchMapping[query]) {
-      setSearchError(""); setShowSuggestions(false);
-      navigateToSection(searchMapping[query]); return;
+      setSearchError("");
+      setShowSuggestions(false);
+      navigateToSection(searchMapping[query]);
+      return;
     }
-    let bestMatch = null, highestScore = 0;
+    let bestMatch = null,
+      highestScore = 0;
     Object.keys(searchMapping).forEach((key) => {
       const score = getMatchScore(query, key);
-      if (score > highestScore) { highestScore = score; bestMatch = searchMapping[key]; }
+      if (score > highestScore) {
+        highestScore = score;
+        bestMatch = searchMapping[key];
+      }
     });
     if (bestMatch && highestScore > 35) {
-      setSearchError(""); setShowSuggestions(false);
+      setSearchError("");
+      setShowSuggestions(false);
       navigateToSection(bestMatch);
     } else {
-      setSearchError("No matching content found. Try keywords like: ML, AI, robot, projects, cyber security");
+      setSearchError(
+        "No matching content found. Try keywords like: ML, AI, robot, projects, cyber security",
+      );
       setTimeout(() => setSearchError(""), 5000);
     }
   };
 
   const navigateToSection = (path) => {
-    setSearchQuery(""); setSuggestions([]); setShowSuggestions(false);
+    setSearchQuery("");
+    setSuggestions([]);
+    setShowSuggestions(false);
     if (path.includes("#")) {
       const [pagePath, sectionId] = path.split("#");
-      if (window.location.pathname === pagePath || (pagePath === "/" && window.location.pathname === "")) {
+      if (
+        window.location.pathname === pagePath ||
+        (pagePath === "/" && window.location.pathname === "")
+      ) {
         const element = document.getElementById(sectionId);
         if (element) element.scrollIntoView({ behavior: "smooth" });
         return;
@@ -231,7 +309,10 @@ const Home = () => {
             transition={{ duration: 0.5 }}
             className="flex flex-col md:flex-row justify-between items-center mb-10"
           >
-            <div className="flex flex-col w-full md:w-auto mb-6 md:mb-0 relative" ref={searchInputRef}>
+            <div
+              className="flex flex-col w-full md:w-auto mb-6 md:mb-0 relative"
+              ref={searchInputRef}
+            >
               <div className="flex relative">
                 <input
                   type="text"
@@ -270,7 +351,9 @@ const Home = () => {
                       className="px-4 py-3 hover:bg-[var(--bg-secondary)] cursor-pointer border-b border-[var(--border-color)] last:border-none flex items-center gap-3 text-sm"
                     >
                       <Search className="w-4 h-4 text-[var(--accent)] flex-shrink-0" />
-                      <span className="text-[var(--text-primary)] capitalize">{s.key}</span>
+                      <span className="text-[var(--text-primary)] capitalize">
+                        {s.key}
+                      </span>
                     </div>
                   ))}
                 </motion.div>
@@ -313,12 +396,16 @@ const Home = () => {
               </h2>
 
               <p className="mb-8 text-[var(--text-secondary)] leading-relaxed">
-                I am an ETE graduate with a deep passion for Machine Learning, Artificial Intelligence, and research in
-                areas such as Cyber Security, Autonomous Vehicles, Image Processing, and Cyber-Physical Systems.
-                As a MERN Stack Web Developer, I enjoy building scalable and user-friendly web solutions.
-                I have developed multiple projects that solve real-world problems and dream of pursuing higher studies abroad
-                to become a researcher in my field. In the future, I aspire to create intelligent web platforms that seamlessly
-                integrate AI features to deliver easy-to-use solutions for users.
+                I am an ETE graduate with a deep passion for Machine Learning,
+                Artificial Intelligence, and research in areas such as Cyber
+                Security, Autonomous Vehicles, Image Processing, and
+                Cyber-Physical Systems. As a MERN Stack Web Developer, I enjoy
+                building scalable and user-friendly web solutions. I have
+                developed multiple projects that solve real-world problems and
+                dream of pursuing higher studies abroad to become a researcher
+                in my field. In the future, I aspire to create intelligent web
+                platforms that seamlessly integrate AI features to deliver
+                easy-to-use solutions for users.
               </p>
 
               <a
@@ -346,11 +433,31 @@ const Home = () => {
               </div>
 
               <div className="flex gap-3 mt-8 flex-wrap justify-center">
-                <SocialLink href="https://scholar.google.com/citations?user=HoeeAaIAAAAJ&hl=en" icon={<BookOpen className="w-4 h-4" />} title="Google Scholar" />
-                <SocialLink href="https://orcid.org/my-orcid?orcid=0009-0001-1757-5180" icon={<UserCheck className="w-4 h-4" />} title="ORCID" />
-                <SocialLink href="https://www.researchgate.net/profile/Mahadi-Shaisob?ev=hdr_xprf" icon={<Users className="w-4 h-4" />} title="ResearchGate" />
-                <SocialLink href="https://github.com/shoisob2004037" icon={<Github className="w-4 h-4" />} title="GitHub" />
-                <SocialLink href="https://www.linkedin.com/in/mahadi-hasan-shaisob-bb72892b9/" icon={<Linkedin className="w-4 h-4" />} title="LinkedIn" />
+                <SocialLink
+                  href="https://scholar.google.com/citations?user=HoeeAaIAAAAJ&hl=en"
+                  icon={<BookOpen className="w-4 h-4" />}
+                  title="Google Scholar"
+                />
+                <SocialLink
+                  href="https://orcid.org/my-orcid?orcid=0009-0001-1757-5180"
+                  icon={<UserCheck className="w-4 h-4" />}
+                  title="ORCID"
+                />
+                <SocialLink
+                  href="https://www.researchgate.net/profile/Mahadi-Shaisob?ev=hdr_xprf"
+                  icon={<Users className="w-4 h-4" />}
+                  title="ResearchGate"
+                />
+                <SocialLink
+                  href="https://github.com/shoisob2004037"
+                  icon={<Github className="w-4 h-4" />}
+                  title="GitHub"
+                />
+                <SocialLink
+                  href="https://www.linkedin.com/in/mahadi-hasan-shaisob-bb72892b9/"
+                  icon={<Linkedin className="w-4 h-4" />}
+                  title="LinkedIn"
+                />
               </div>
             </motion.div>
           </div>
@@ -373,7 +480,10 @@ const Home = () => {
                   <span>Latest Updates</span>
                 </div>
                 <h2 className="font-serif text-2xl md:text-3xl font-bold text-[var(--text-primary)]">
-                  Recent <span className="text-[var(--accent)]">News & Activities</span>
+                  Recent{" "}
+                  <span className="text-[var(--accent)]">
+                    News & Activities
+                  </span>
                 </h2>
               </div>
               <button
@@ -412,7 +522,10 @@ const Home = () => {
                   </p>
                   <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[var(--border-color)]">
                     {news.tags.slice(0, 3).map((tag, idx) => (
-                      <span key={idx} className="text-[10px] font-medium px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
+                      <span
+                        key={idx}
+                        className="text-[10px] font-medium px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+                      >
                         #{tag}
                       </span>
                     ))}
@@ -427,7 +540,7 @@ const Home = () => {
       <AboutMe darkMode={darkMode} />
 
       {/* Reviews Section (inside Home) */}
-            {/* Reviews Section (inside Home) */}
+      {/* Reviews Section (inside Home) */}
       <section className="py-16 bg-[var(--bg-secondary)] border-y border-[var(--border-color)]">
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
@@ -446,7 +559,8 @@ const Home = () => {
             </h2>
             <div className="academic-divider"></div>
             <p className="mt-4 text-[var(--text-secondary)] text-sm md:text-base max-w-2xl mx-auto">
-              What colleagues, mentors, and collaborators say about working with me.
+              What colleagues, mentors, and collaborators say about working with
+              me.
             </p>
           </motion.div>
 
@@ -478,7 +592,11 @@ const Home = () => {
                       <Star
                         key={i}
                         size={14}
-                        className={i < review.rating ? "text-[var(--accent)] fill-[var(--accent)]" : "text-[var(--border-strong)]"}
+                        className={
+                          i < review.rating
+                            ? "text-[var(--accent)] fill-[var(--accent)]"
+                            : "text-[var(--border-strong)]"
+                        }
                       />
                     ))}
                   </div>
@@ -487,7 +605,11 @@ const Home = () => {
                   </p>
                   <div className="flex items-center gap-3 pt-4 border-t border-[var(--border-color)]">
                     {review.userPhoto ? (
-                      <img src={review.userPhoto} alt={review.userName} className="w-10 h-10 rounded-full object-cover border border-[var(--border-color)]" />
+                      <img
+                        src={review.userPhoto}
+                        alt={review.userName}
+                        className="w-10 h-10 rounded-full object-cover border border-[var(--border-color)]"
+                      />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-[var(--accent)] text-xs font-bold">
                         {review.userName?.charAt(0) || "U"}
@@ -527,7 +649,11 @@ const Home = () => {
       <motion.button
         onClick={scrollToTop}
         initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: showBackToTop ? 1 : 0, scale: showBackToTop ? 1 : 0.5, y: showBackToTop ? 0 : 20 }}
+        animate={{
+          opacity: showBackToTop ? 1 : 0,
+          scale: showBackToTop ? 1 : 0.5,
+          y: showBackToTop ? 0 : 20,
+        }}
         transition={{ duration: 0.3 }}
         className="fixed bottom-6 right-6 p-3 rounded-full bg-[var(--accent)] text-white shadow-lg z-50 hover:bg-[var(--accent-hover)] transition-colors"
         aria-label="Back to top"

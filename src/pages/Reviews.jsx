@@ -4,8 +4,25 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase/firebase";
-import { collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "firebase/firestore";
-import { Star, StarOff, User, MessageSquare, LogIn, LogOut, Send, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  serverTimestamp,
+} from "firebase/firestore";
+import {
+  Star,
+  StarOff,
+  User,
+  MessageSquare,
+  LogIn,
+  LogOut,
+  Send,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Reviews = () => {
@@ -20,7 +37,9 @@ const Reviews = () => {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => { fetchReviews(); }, []);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
   const fetchReviews = async () => {
     setIsLoading(true);
@@ -28,7 +47,9 @@ const Reviews = () => {
       const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
       const querySnapshot = await getDocs(q);
       const reviewsData = [];
-      querySnapshot.forEach((doc) => reviewsData.push({ id: doc.id, ...doc.data() }));
+      querySnapshot.forEach((doc) =>
+        reviewsData.push({ id: doc.id, ...doc.data() }),
+      );
       setReviews(reviewsData);
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -40,11 +61,21 @@ const Reviews = () => {
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
-    if (!currentUser) { setError("Please login to submit a review"); return; }
-    if (rating === 0) { setError("Please select a rating"); return; }
-    if (reviewText.trim() === "") { setError("Please enter a review"); return; }
+    if (!currentUser) {
+      setError("Please login to submit a review");
+      return;
+    }
+    if (rating === 0) {
+      setError("Please select a rating");
+      return;
+    }
+    if (reviewText.trim() === "") {
+      setError("Please enter a review");
+      return;
+    }
 
-    setIsSubmitting(true); setError("");
+    setIsSubmitting(true);
+    setError("");
     try {
       await addDoc(collection(db, "reviews"), {
         userId: currentUser.uid,
@@ -56,7 +87,8 @@ const Reviews = () => {
         createdAt: serverTimestamp(),
       });
       setSuccess("Your review has been submitted successfully!");
-      setRating(0); setReviewText("");
+      setRating(0);
+      setReviewText("");
       fetchReviews();
       setTimeout(() => setSuccess(""), 3000);
     } catch (error) {
@@ -71,7 +103,12 @@ const Reviews = () => {
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         {/* ============ HEADER ============ */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
+        >
           <div className="section-label mb-3 inline-flex">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Feedback</span>
@@ -81,7 +118,8 @@ const Reviews = () => {
           </h1>
           <div className="academic-divider"></div>
           <p className="text-base max-w-2xl mx-auto text-[var(--text-secondary)] mt-4">
-            Your feedback helps me improve! Please share your thoughts about my portfolio.
+            Your feedback helps me improve! Please share your thoughts about my
+            portfolio.
           </p>
         </motion.div>
 
@@ -134,20 +172,30 @@ const Reviews = () => {
             <form onSubmit={handleSubmitReview}>
               <div className="flex items-center mb-5">
                 {currentUser.photoURL ? (
-                  <img src={currentUser.photoURL} alt={currentUser.displayName} className="w-11 h-11 rounded-full mr-3 border-2 border-[var(--accent)]" />
+                  <img
+                    src={currentUser.photoURL}
+                    alt={currentUser.displayName}
+                    className="w-11 h-11 rounded-full mr-3 border-2 border-[var(--accent)]"
+                  />
                 ) : (
                   <div className="w-11 h-11 rounded-full mr-3 flex items-center justify-center bg-[var(--bg-tertiary)] text-[var(--accent)]">
                     <User size={20} />
                   </div>
                 )}
                 <div>
-                  <span className="font-medium block text-[var(--text-primary)] text-sm">{currentUser.displayName}</span>
-                  <span className="text-xs text-[var(--text-muted)]">{currentUser.email}</span>
+                  <span className="font-medium block text-[var(--text-primary)] text-sm">
+                    {currentUser.displayName}
+                  </span>
+                  <span className="text-xs text-[var(--text-muted)]">
+                    {currentUser.email}
+                  </span>
                 </div>
               </div>
 
               <div className="mb-5">
-                <p className="mb-2 font-medium text-sm text-[var(--text-primary)]">Your Rating:</p>
+                <p className="mb-2 font-medium text-sm text-[var(--text-primary)]">
+                  Your Rating:
+                </p>
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -160,9 +208,15 @@ const Reviews = () => {
                       aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
                     >
                       {(hoverRating || rating) >= star ? (
-                        <Star className="text-[var(--accent)] fill-[var(--accent)]" size={28} />
+                        <Star
+                          className="text-[var(--accent)] fill-[var(--accent)]"
+                          size={28}
+                        />
                       ) : (
-                        <StarOff className="text-[var(--text-muted)]" size={28} />
+                        <StarOff
+                          className="text-[var(--text-muted)]"
+                          size={28}
+                        />
                       )}
                     </button>
                   ))}
@@ -170,7 +224,10 @@ const Reviews = () => {
               </div>
 
               <div className="mb-5">
-                <label htmlFor="reviewText" className="block mb-2 font-medium text-sm text-[var(--text-primary)]">
+                <label
+                  htmlFor="reviewText"
+                  className="block mb-2 font-medium text-sm text-[var(--text-primary)]"
+                >
                   Your Review:
                 </label>
                 <textarea
@@ -185,23 +242,51 @@ const Reviews = () => {
 
               <AnimatePresence>
                 {error && (
-                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mb-4 p-3 bg-red-50 text-red-700 border border-red-200 rounded-md flex items-center gap-2 text-sm">
-                    <AlertCircle className="w-4 h-4" />{error}
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mb-4 p-3 bg-red-50 text-red-700 border border-red-200 rounded-md flex items-center gap-2 text-sm"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {error}
                   </motion.div>
                 )}
                 {success && (
-                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mb-4 p-3 bg-[var(--accent-light)] text-[var(--accent)] border border-[var(--border-color)] rounded-md flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4" />{success}
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mb-4 p-3 bg-[var(--accent-light)] text-[var(--accent)] border border-[var(--border-color)] rounded-md flex items-center gap-2 text-sm"
+                  >
+                    <CheckCircle className="w-4 h-4" />
+                    {success}
                   </motion.div>
                 )}
               </AnimatePresence>
 
               <div className="flex flex-col sm:flex-row justify-between gap-3">
-                <button type="submit" disabled={isSubmitting} className="btn-academic disabled:opacity-50 disabled:cursor-not-allowed">
-                  {isSubmitting ? "Submitting..." : (<><Send className="w-4 h-4" />Submit Review</>)}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-academic disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    "Submitting..."
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Submit Review
+                    </>
+                  )}
                 </button>
-                <button type="button" onClick={logout} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-[var(--accent)] text-sm font-medium transition-colors">
-                  <LogOut className="w-4 h-4" />Logout
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-color)] hover:border-[var(--accent)] text-sm font-medium transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
                 </button>
               </div>
             </form>
@@ -209,7 +294,11 @@ const Reviews = () => {
         </motion.div>
 
         {/* ============ REVIEWS LIST ============ */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-serif text-lg font-semibold flex items-center gap-2 text-[var(--accent)]">
               <MessageSquare className="w-4 h-4" />
@@ -228,7 +317,9 @@ const Reviews = () => {
           ) : reviews.length === 0 ? (
             <div className="text-center py-16 academic-card">
               <MessageSquare className="w-10 h-10 mx-auto mb-4 text-[var(--text-muted)]" />
-              <p className="text-base text-[var(--text-secondary)]">No reviews yet. Be the first to leave a review!</p>
+              <p className="text-base text-[var(--text-secondary)]">
+                No reviews yet. Be the first to leave a review!
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -242,7 +333,11 @@ const Reviews = () => {
                 >
                   <div className="flex items-start">
                     {review.userPhoto ? (
-                      <img src={review.userPhoto} alt={review.userName} className="w-11 h-11 rounded-full mr-4 border border-[var(--border-color)]" />
+                      <img
+                        src={review.userPhoto}
+                        alt={review.userName}
+                        className="w-11 h-11 rounded-full mr-4 border border-[var(--border-color)]"
+                      />
                     ) : (
                       <div className="w-11 h-11 rounded-full mr-4 flex items-center justify-center bg-[var(--bg-tertiary)] text-[var(--accent)]">
                         <User size={20} />
@@ -251,17 +346,30 @@ const Reviews = () => {
 
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
-                        <h3 className="font-serif font-semibold text-base text-[var(--text-primary)]">{review.userName}</h3>
+                        <h3 className="font-serif font-semibold text-base text-[var(--text-primary)]">
+                          {review.userName}
+                        </h3>
                         <div className="flex items-center">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={14} className={i < review.rating ? "text-[var(--accent)] fill-[var(--accent)]" : "text-[var(--border-strong)]"} />
+                            <Star
+                              key={i}
+                              size={14}
+                              className={
+                                i < review.rating
+                                  ? "text-[var(--accent)] fill-[var(--accent)]"
+                                  : "text-[var(--border-strong)]"
+                              }
+                            />
                           ))}
                           <span className="ml-2 text-xs text-[var(--text-muted)]">
-                            {review.createdAt?.toDate().toLocaleDateString() || "Just now"}
+                            {review.createdAt?.toDate().toLocaleDateString() ||
+                              "Just now"}
                           </span>
                         </div>
                       </div>
-                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{review.reviewText}</p>
+                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                        {review.reviewText}
+                      </p>
                     </div>
                   </div>
                 </motion.div>

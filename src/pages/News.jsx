@@ -5,23 +5,174 @@
 import { useState, useMemo } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Newspaper, Calendar, ExternalLink, Search, Megaphone } from "lucide-react";
+import {
+  Newspaper,
+  Calendar,
+  ExternalLink,
+  Search,
+  Megaphone,
+} from "lucide-react";
 
 const initialNewsData = [
-  { id: "news-14", date: "2026-08-14", formattedDate: "August 14, 2026", title: "Presented Paper at IEEE SPICSCON 2026", type: "Conference Presentation", description: "Delivered presentation for 'RFAT: Deep Learning-Based Detection of Sensor Manipulation Attacks in Autonomous Vehicles' officially accepted for presentation at IEEE SPICSCON 2026.' at IEEE SPICSCON 2026.", tags: ["Conference Presentation", "IEEE SPICSCON", "Sensor Security", "Autonomous Vehicles"] },
-  { id: "news-13", date: "2026-08-14", formattedDate: "August 14, 2026", title: "Presented Paper at IEEE SPICSCON 2026", type: "Conference Presentation", description: "Delivered presentation for 'Defense Against Adversarial Attacks on YOLO-based Object Detection for Autonomous Vehicles Using Bangladeshi Occluded Road Dataset' at IEEE SPICSCON 2026.", tags: ["Conference Presentation", "IEEE SPICSCON", "Adversarial ML", "Autonomous Vehicles"] },
-  { id: "news-12", date: "2026-08-04", formattedDate: "August 04, 2026", title: "B.Sc. Degree Results Published with Top Honors", type: "Academic Achievement", description: "Successfully completed B.Sc. in Electronics and Telecommunication Engineering (ETE) with an overall CGPA of 3.76/4.00, securing 5th rank in the department. Achieved an outstanding SGPA of 3.96/4.00 (2nd rank in department) in the final semester. My last 4 semesters' SGPA were 3.96, 3.96, 3.98, and 3.95 respectively, reflecting consistent academic excellence throughout the undergraduate program.", tags: ["Graduation", "Academic Excellence", "RUET", "ETE"] },
-  { id: "news-11", date: "2026-08-02", formattedDate: "August 02, 2026", title: "Successfully Defended Undergraduate Thesis", type: "Thesis Defense", description: 'Officially defended undergraduate thesis titled "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection", marking the successful culmination of undergraduate research in AI and web security.', tags: ["Thesis Defense", "Cybersecurity", "Deep Learning", "XSS"] },
-  { id: "news-10", date: "2026-07-21", formattedDate: "July 21, 2026", title: "Paper Accepted at IEEE SPICSCON 2026", type: "Paper Acceptance", description: 'Research paper titled "Defense Against Adversarial Attacks on YOLO-based Object Detection for Autonomous Vehicles Using Bangladeshi Occluded Road Dataset" has been officially accepted for presentation at IEEE SPICSCON 2026.', tags: ["Adversarial Machine Learning", "Autonomous Vehicles", "YOLO", "IEEE"] },
-  { id: "news-9", date: "2026-07-21", formattedDate: "July 21, 2026", title: "Paper Accepted at IEEE SPICSCON 2026", type: "Paper Acceptance", description: 'Co-authored paper "RFAT: Deep Learning-Based Detection of Sensor Manipulation Attacks in Autonomous Vehicles" officially accepted for presentation at IEEE SPICSCON 2026.', tags: ["Autonomous Vehicles", "Sensor Security", "Deep Learning", "IEEE"] },
-  { id: "news-8", date: "2026-06-18", formattedDate: "June 18, 2026", title: "Presented Paper at IEEE PECCII 2026", type: "Conference Presentation", description: 'Successfully presented our research paper "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication" at IEEE PECCII 2026.', tags: ["Microstrip Antenna", "5G", "Satellite Communication", "IEEE"] },
-  { id: "news-7", date: "2026-05-08", formattedDate: "May 08, 2026", title: "Paper Officially Published on IEEE Xplore", type: "Publication", description: 'Our paper titled "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection" is now officially published and indexed on IEEE Xplore.', link: "https://ieeexplore.ieee.org/document/11491109", linkText: "Read Paper on IEEE Xplore", tags: ["IEEE Xplore", "BiLSTM", "Web Security", "Indexed Paper"] },
-  { id: "news-6", date: "2026-05-07", formattedDate: "May 07, 2026", title: "Paper Accepted at IEEE PECCII 2026", type: "Paper Acceptance", description: 'Research paper "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication" accepted for presentation at IEEE PECCII 2026.', tags: ["Antenna Design", "5G", "IEEE PECCII"] },
-  { id: "news-5", date: "2026-03-24", formattedDate: "March 24, 2026", title: "Paper Published in IEEE Xplore", type: "Publication", description: 'Research paper "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks" officially published and accessible in IEEE Xplore.', link: "https://ieeexplore.ieee.org/document/11429351", linkText: "Read Paper on IEEE Xplore", tags: ["LLM", "CNN-BiLSTM", "XSS Detection", "IEEE"] },
-  { id: "news-4", date: "2026-01-31", formattedDate: "January 31, 2026", title: "Presented Paper at IEEE ICECTE 2026", type: "Conference Presentation", description: 'Delivered presentation for "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks" at ICECTE 2026.', tags: ["Conference Presentation", "ICECTE", "AI Security"] },
-  { id: "news-3", date: "2025-12-19", formattedDate: "December 19, 2025", title: "Presented paper at IEEE ICCIT 2025", type: "Conference Presentation", description: 'Presented "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection" at the 28th International Conference on Computer and Information Technology (ICCIT 2025).', tags: ["ICCIT 2025", "Conference Presentation", "BiLSTM"] },
-  { id: "news-2", date: "2025-12-16", formattedDate: "December 16, 2025", title: "Paper Accepted at IEEE ICECTE 2026", type: "Paper Acceptance", description: 'Our research paper "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks" accepted for presentation at ICECTE 2026.', tags: ["Paper Acceptance", "ICECTE", "LLM", "Deep Learning"] },
-  { id: "news-1", date: "2025-12-01", formattedDate: "December 01, 2025", title: "Paper Accepted at IEEE ICCIT 2025", type: "Paper Acceptance", description: 'Paper "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection" officially accepted for presentation at ICCIT 2025.', tags: ["Paper Acceptance", "ICCIT 2025", "Web Security"] },
+  {
+    id: "news-14",
+    date: "2026-08-14",
+    formattedDate: "August 14, 2026",
+    title: "Presented Paper at IEEE SPICSCON 2026",
+    type: "Conference Presentation",
+    description:
+      "Delivered presentation for 'RFAT: Deep Learning-Based Detection of Sensor Manipulation Attacks in Autonomous Vehicles' officially accepted for presentation at IEEE SPICSCON 2026.' at IEEE SPICSCON 2026.",
+    tags: [
+      "Conference Presentation",
+      "IEEE SPICSCON",
+      "Sensor Security",
+      "Autonomous Vehicles",
+    ],
+  },
+  {
+    id: "news-13",
+    date: "2026-08-14",
+    formattedDate: "August 14, 2026",
+    title: "Presented Paper at IEEE SPICSCON 2026",
+    type: "Conference Presentation",
+    description:
+      "Delivered presentation for 'Defense Against Adversarial Attacks on YOLO-based Object Detection for Autonomous Vehicles Using Bangladeshi Occluded Road Dataset' at IEEE SPICSCON 2026.",
+    tags: [
+      "Conference Presentation",
+      "IEEE SPICSCON",
+      "Adversarial ML",
+      "Autonomous Vehicles",
+    ],
+  },
+  {
+    id: "news-12",
+    date: "2026-08-04",
+    formattedDate: "August 04, 2026",
+    title: "B.Sc. Degree Results Published with Top Honors",
+    type: "Academic Achievement",
+    description:
+      "Successfully completed B.Sc. in Electronics and Telecommunication Engineering (ETE) with an overall CGPA of 3.76/4.00, securing 5th rank in the department. Achieved an outstanding SGPA of 3.96/4.00 (2nd rank in department) in the final semester. My last 4 semesters' SGPA were 3.96, 3.96, 3.98, and 3.95 respectively, reflecting consistent academic excellence throughout the undergraduate program.",
+    tags: ["Graduation", "Academic Excellence", "RUET", "ETE"],
+  },
+  {
+    id: "news-11",
+    date: "2026-08-02",
+    formattedDate: "August 02, 2026",
+    title: "Successfully Defended Undergraduate Thesis",
+    type: "Thesis Defense",
+    description:
+      'Officially defended undergraduate thesis titled "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection", marking the successful culmination of undergraduate research in AI and web security.',
+    tags: ["Thesis Defense", "Cybersecurity", "Deep Learning", "XSS"],
+  },
+  {
+    id: "news-10",
+    date: "2026-07-21",
+    formattedDate: "July 21, 2026",
+    title: "Paper Accepted at IEEE SPICSCON 2026",
+    type: "Paper Acceptance",
+    description:
+      'Research paper titled "Defense Against Adversarial Attacks on YOLO-based Object Detection for Autonomous Vehicles Using Bangladeshi Occluded Road Dataset" has been officially accepted for presentation at IEEE SPICSCON 2026.',
+    tags: [
+      "Adversarial Machine Learning",
+      "Autonomous Vehicles",
+      "YOLO",
+      "IEEE",
+    ],
+  },
+  {
+    id: "news-9",
+    date: "2026-07-21",
+    formattedDate: "July 21, 2026",
+    title: "Paper Accepted at IEEE SPICSCON 2026",
+    type: "Paper Acceptance",
+    description:
+      'Co-authored paper "RFAT: Deep Learning-Based Detection of Sensor Manipulation Attacks in Autonomous Vehicles" officially accepted for presentation at IEEE SPICSCON 2026.',
+    tags: ["Autonomous Vehicles", "Sensor Security", "Deep Learning", "IEEE"],
+  },
+  {
+    id: "news-8",
+    date: "2026-06-18",
+    formattedDate: "June 18, 2026",
+    title: "Presented Paper at IEEE PECCII 2026",
+    type: "Conference Presentation",
+    description:
+      'Successfully presented our research paper "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication" at IEEE PECCII 2026.',
+    tags: ["Microstrip Antenna", "5G", "Satellite Communication", "IEEE"],
+  },
+  {
+    id: "news-7",
+    date: "2026-05-08",
+    formattedDate: "May 08, 2026",
+    title: "Paper Officially Published on IEEE Xplore",
+    type: "Publication",
+    description:
+      'Our paper titled "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection" is now officially published and indexed on IEEE Xplore.',
+    link: "https://ieeexplore.ieee.org/document/11491109",
+    linkText: "Read Paper on IEEE Xplore",
+    tags: ["IEEE Xplore", "BiLSTM", "Web Security", "Indexed Paper"],
+  },
+  {
+    id: "news-6",
+    date: "2026-05-07",
+    formattedDate: "May 07, 2026",
+    title: "Paper Accepted at IEEE PECCII 2026",
+    type: "Paper Acceptance",
+    description:
+      'Research paper "High-Gain H-Slot Microstrip Patch Array Antenna for 24-GHz 5G and Satellite Communication" accepted for presentation at IEEE PECCII 2026.',
+    tags: ["Antenna Design", "5G", "IEEE PECCII"],
+  },
+  {
+    id: "news-5",
+    date: "2026-03-24",
+    formattedDate: "March 24, 2026",
+    title: "Paper Published in IEEE Xplore",
+    type: "Publication",
+    description:
+      'Research paper "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks" officially published and accessible in IEEE Xplore.',
+    link: "https://ieeexplore.ieee.org/document/11429351",
+    linkText: "Read Paper on IEEE Xplore",
+    tags: ["LLM", "CNN-BiLSTM", "XSS Detection", "IEEE"],
+  },
+  {
+    id: "news-4",
+    date: "2026-01-31",
+    formattedDate: "January 31, 2026",
+    title: "Presented Paper at IEEE ICECTE 2026",
+    type: "Conference Presentation",
+    description:
+      'Delivered presentation for "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks" at ICECTE 2026.',
+    tags: ["Conference Presentation", "ICECTE", "AI Security"],
+  },
+  {
+    id: "news-3",
+    date: "2025-12-19",
+    formattedDate: "December 19, 2025",
+    title: "Presented paper at IEEE ICCIT 2025",
+    type: "Conference Presentation",
+    description:
+      'Presented "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection" at the 28th International Conference on Computer and Information Technology (ICCIT 2025).',
+    tags: ["ICCIT 2025", "Conference Presentation", "BiLSTM"],
+  },
+  {
+    id: "news-2",
+    date: "2025-12-16",
+    formattedDate: "December 16, 2025",
+    title: "Paper Accepted at IEEE ICECTE 2026",
+    type: "Paper Acceptance",
+    description:
+      'Our research paper "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks" accepted for presentation at ICECTE 2026.',
+    tags: ["Paper Acceptance", "ICECTE", "LLM", "Deep Learning"],
+  },
+  {
+    id: "news-1",
+    date: "2025-12-01",
+    formattedDate: "December 01, 2025",
+    title: "Paper Accepted at IEEE ICCIT 2025",
+    type: "Paper Acceptance",
+    description:
+      'Paper "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection" officially accepted for presentation at ICCIT 2025.',
+    tags: ["Paper Acceptance", "ICCIT 2025", "Web Security"],
+  },
 ];
 
 const News = () => {
@@ -125,7 +276,10 @@ const News = () => {
                       <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[var(--border-color)]">
                         <div className="flex flex-wrap gap-1.5">
                           {news.tags.map((tag, idx) => (
-                            <span key={idx} className="text-[10px] font-medium px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
+                            <span
+                              key={idx}
+                              className="text-[10px] font-medium px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+                            >
                               #{tag}
                             </span>
                           ))}
@@ -147,7 +301,11 @@ const News = () => {
                   </motion.div>
                 ))
               ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-16"
+                >
                   <Newspaper className="w-10 h-10 mx-auto mb-3 text-[var(--text-muted)]" />
                   <p className="text-base font-medium text-[var(--text-muted)]">
                     No news items matching "{searchQuery}".

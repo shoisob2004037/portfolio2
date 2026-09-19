@@ -3,7 +3,14 @@
 import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "framer-motion";
-import { FileText, ExternalLink, Calendar, Award, BookOpen, Users } from "lucide-react";
+import {
+  FileText,
+  ExternalLink,
+  Calendar,
+  Award,
+  BookOpen,
+  Users,
+} from "lucide-react";
 
 const Publications = () => {
   const { darkMode } = useTheme();
@@ -12,29 +19,48 @@ const Publications = () => {
   const publications = [
     {
       id: 1,
-      title: "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks",
+      title:
+        "DeepGuard-XSS: Leveraging Large Language Models with CNN–BiLSTM for Robust Detection of Obfuscated XSS Attacks",
       authors: "Mahadi Hasan Shaisob, Md. Nafish Ahamed Apu",
-      conference: "2026 5th International Conference on Electrical, Computer & Telecommunication Engineering (ICECTE)",
+      conference:
+        "2026 5th International Conference on Electrical, Computer & Telecommunication Engineering (ICECTE)",
       location: "Rajshahi, Bangladesh",
       date: "January 29-31, 2026",
       publishedOn: "IEEE Xplore: March 16, 2026",
       link: "https://ieeexplore.ieee.org/document/11429351",
       doi: "10.1109/ICECTE69292.2026.11429351",
       abstract: `Cross-site scripting remains a major security threat for web platforms, with obfuscated attack payloads continuing to bypass traditional detection. In this study, an extensive labeled XSS dataset was constructed by aggregating samples from several public sources and further enriched using LLM-driven (CodeT5) obfuscation to simulate real-world evasive techniques. The proposed DeepGuard-XSS framework explores two deep architectures: a character-level Convolutional Neural Network (CNN) and a BiLSTM model optimized for handling complex, variable-length script patterns. The BiLSTM configuration leverages an expanded embedding space and dual bidirectional LSTM layers, achieving a test accuracy of 98.1%, with high precision, recall, and F1 metrics. Similarly, the updated CNN variant attains 97.22% accuracy, demonstrating strong performance even as obfuscated and adversarial payload diversity increases. In addition, both deep models outperform several classical baseline machine learning classifiers (Logistic Regression, Multinomial NB, Decision Tree, XGBoost) evaluated on the same dataset, confirming the benefit of the proposed deep architectures for robust XSS detection.`,
-      technologies: ["Large Language Models", "CNN", "BiLSTM", "CodeT5", "XSS Detection", "Cybersecurity"],
+      technologies: [
+        "Large Language Models",
+        "CNN",
+        "BiLSTM",
+        "CodeT5",
+        "XSS Detection",
+        "Cybersecurity",
+      ],
     },
     {
       id: 2,
-      title: "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection",
-      authors: "Mahadi Hasan Shaisob, Md. Mehedi Hassan, Rubaeat Ahammed, Md Arif Hossen",
-      conference: "2025 28th International Conference on Computer and Information Technology (ICCIT)",
+      title:
+        "XSS-SafeNet: A Bidirectional LSTM Architecture for High-Precision Cross-Site Scripting Detection",
+      authors:
+        "Mahadi Hasan Shaisob, Md. Mehedi Hassan, Rubaeat Ahammed, Md Arif Hossen",
+      conference:
+        "2025 28th International Conference on Computer and Information Technology (ICCIT)",
       location: "Cox's Bazar, Bangladesh",
       date: "December 19-21, 2025",
       publishedOn: "IEEE Xplore: May 6, 2026",
       link: "https://ieeexplore.ieee.org/document/11491109",
       doi: "10.1109/ICCIT68739.2025.11491109",
-      abstract: "Cross-Site Scripting (XSS) persists as a severe and costly web threat, enabling arbitrary script execution, session hijacking, and data theft. This paper proposes a tailored bidirectional long short-term memory (BiLSTM) model that focuses on the sequential structure of XSS payloads. Trained on 1,831,254 samples with a 60% for train and 40% for test and an internal 40% validation split on the training portion, the detector achieves 99.59% accuracy, 100% precision, 99.36% recall, and a 99.68%F1-score. We benchmark against strong classical base-lines-Logistic Regression, Random Forest, Multinomial Naive Bayes, Decision Tree, and XGBoost-and discuss where sequence modeling offers clear advantages. The findings indicate that sequence-aware deep architectures can deliver robust, scalable XSS detection suitable for modern deployment settings.",
-      technologies: ["BiLSTM", "Deep Learning", "XSS Detection", "Cybersecurity", "LLM"],
+      abstract:
+        "Cross-Site Scripting (XSS) persists as a severe and costly web threat, enabling arbitrary script execution, session hijacking, and data theft. This paper proposes a tailored bidirectional long short-term memory (BiLSTM) model that focuses on the sequential structure of XSS payloads. Trained on 1,831,254 samples with a 60% for train and 40% for test and an internal 40% validation split on the training portion, the detector achieves 99.59% accuracy, 100% precision, 99.36% recall, and a 99.68%F1-score. We benchmark against strong classical base-lines-Logistic Regression, Random Forest, Multinomial Naive Bayes, Decision Tree, and XGBoost-and discuss where sequence modeling offers clear advantages. The findings indicate that sequence-aware deep architectures can deliver robust, scalable XSS detection suitable for modern deployment settings.",
+      technologies: [
+        "BiLSTM",
+        "Deep Learning",
+        "XSS Detection",
+        "Cybersecurity",
+        "LLM",
+      ],
     },
   ];
 
@@ -56,7 +82,8 @@ const Publications = () => {
           </h1>
           <div className="academic-divider"></div>
           <p className="mt-4 text-sm sm:text-base max-w-2xl mx-auto text-[var(--text-secondary)]">
-            Research contributions in cybersecurity, machine learning, and web technologies
+            Research contributions in cybersecurity, machine learning, and web
+            technologies
           </p>
         </motion.div>
 
@@ -82,29 +109,41 @@ const Publications = () => {
 
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <Users className="w-4 h-4 text-[var(--accent)]" />
-                <span className="text-sm text-[var(--text-secondary)]">{pub.authors}</span>
+                <span className="text-sm text-[var(--text-secondary)]">
+                  {pub.authors}
+                </span>
               </div>
 
               <div className="flex flex-wrap gap-4 mb-4">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-[var(--accent)]" />
-                  <span className="text-sm text-[var(--text-secondary)]">{pub.conference}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">
+                    {pub.conference}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-[var(--accent)]" />
-                  <span className="text-sm text-[var(--text-secondary)]">{pub.date}</span>
+                  <span className="text-sm text-[var(--text-secondary)]">
+                    {pub.date}
+                  </span>
                 </div>
               </div>
 
               <div className="mb-4 p-3 rounded-md bg-[var(--accent-light)] border border-[var(--border-color)]">
                 <p className="text-sm text-[var(--text-secondary)]">
-                  <span className="font-semibold">Published on IEEE Xplore:</span> {pub.publishedOn}
+                  <span className="font-semibold">
+                    Published on IEEE Xplore:
+                  </span>{" "}
+                  {pub.publishedOn}
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-4">
                 {pub.technologies.map((tech, idx) => (
-                  <span key={idx} className="px-2 py-1 rounded-md text-xs font-medium bg-[var(--bg-tertiary)] text-[var(--accent)] border border-[var(--border-color)]">
+                  <span
+                    key={idx}
+                    className="px-2 py-1 rounded-md text-xs font-medium bg-[var(--bg-tertiary)] text-[var(--accent)] border border-[var(--border-color)]"
+                  >
                     {tech}
                   </span>
                 ))}
@@ -112,11 +151,17 @@ const Publications = () => {
 
               <div className="mb-6">
                 <button
-                  onClick={() => setExpandedAbstract(expandedAbstract === pub.id ? null : pub.id)}
+                  onClick={() =>
+                    setExpandedAbstract(
+                      expandedAbstract === pub.id ? null : pub.id,
+                    )
+                  }
                   className="flex items-center gap-2 text-sm font-semibold text-[var(--accent)] hover:text-[var(--accent-hover)]"
                 >
                   <FileText className="w-4 h-4" />
-                  {expandedAbstract === pub.id ? "Hide Abstract" : "View Abstract"}
+                  {expandedAbstract === pub.id
+                    ? "Hide Abstract"
+                    : "View Abstract"}
                 </button>
                 {expandedAbstract === pub.id && (
                   <motion.div
@@ -126,7 +171,9 @@ const Publications = () => {
                     transition={{ duration: 0.3 }}
                     className="mt-3 p-4 rounded-md bg-[var(--bg-secondary)] border border-[var(--border-color)]"
                   >
-                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{pub.abstract}</p>
+                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                      {pub.abstract}
+                    </p>
                   </motion.div>
                 )}
               </div>
@@ -167,9 +214,11 @@ const Publications = () => {
           <p className="text-sm text-[var(--text-secondary)]">
             📚 My research focuses on{" "}
             <span className="font-semibold text-[var(--accent)]">
-              Machine Learning, AI, Cybersecurity, Autonomous Vehicles, Image Processing, and Cyber-Physical Systems
-            </span>.
-            I am passionate about creating intelligent web platforms that seamlessly integrate AI features.
+              Machine Learning, AI, Cybersecurity, Autonomous Vehicles, Image
+              Processing, and Cyber-Physical Systems
+            </span>
+            . I am passionate about creating intelligent web platforms that
+            seamlessly integrate AI features.
           </p>
         </div>
       </div>

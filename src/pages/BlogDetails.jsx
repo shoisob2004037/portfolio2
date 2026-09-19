@@ -3,7 +3,16 @@
 import { useParams, Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Tag, ArrowLeft, Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  Tag,
+  ArrowLeft,
+  Github,
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 const BlogDetails = () => {
@@ -17,7 +26,8 @@ const BlogDetails = () => {
     const fetchBlogPosts = async () => {
       try {
         const response = await fetch("/data/blogPosts.json");
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         setAllPosts(data.posts || []);
         const foundPost = data.posts.find((p) => p.id === parseInt(id));
@@ -34,7 +44,8 @@ const BlogDetails = () => {
 
   const currentIndex = allPosts.findIndex((p) => p.id === parseInt(id));
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost =
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   if (loading) {
     return (
@@ -51,8 +62,12 @@ const BlogDetails = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
         <div className="text-center">
-          <h2 className="font-serif text-2xl font-bold mb-4 text-[var(--text-primary)]">Post Not Found</h2>
-          <p className="mb-6 text-[var(--text-secondary)]">The blog post you're looking for doesn't exist.</p>
+          <h2 className="font-serif text-2xl font-bold mb-4 text-[var(--text-primary)]">
+            Post Not Found
+          </h2>
+          <p className="mb-6 text-[var(--text-secondary)]">
+            The blog post you're looking for doesn't exist.
+          </p>
           <Link to="/blogs" className="btn-academic">
             <ArrowLeft className="w-4 h-4" />
             Back to Blogs
@@ -65,14 +80,25 @@ const BlogDetails = () => {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <article className="container mx-auto px-4 py-12 max-w-4xl">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="mb-8">
-          <Link to="/blogs" className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent)] transition-all">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="mb-8"
+        >
+          <Link
+            to="/blogs"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent)] transition-all"
+          >
             <ArrowLeft className="w-4 h-4" />
             Back to Blogs
           </Link>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
           <div className="flex items-center gap-2 mb-4">
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[var(--accent)] text-white">
               {post.category}
@@ -84,30 +110,54 @@ const BlogDetails = () => {
           </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-sm mb-6 text-[var(--text-muted)]">
-            <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{post.date}</span>
-            <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{post.readTime}</span>
+            <span className="flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              {post.date}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              {post.readTime}
+            </span>
           </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
             {post.tags.map((tag) => (
-              <span key={tag} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--accent)]">
-                <Tag className="w-3 h-3" />
-                #{tag}
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-[var(--bg-tertiary)] text-[var(--accent)]"
+              >
+                <Tag className="w-3 h-3" />#{tag}
               </span>
             ))}
           </div>
 
           <div className="flex items-center gap-4 p-4 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] mb-6">
-            <img src={post.authorImage} alt={post.author} className="w-12 h-12 rounded-full object-cover" />
+            <img
+              src={post.authorImage}
+              alt={post.author}
+              className="w-12 h-12 rounded-full object-cover"
+            />
             <div>
-              <p className="font-serif font-semibold text-[var(--text-primary)]">{post.author}</p>
-              <p className="text-sm text-[var(--text-muted)]">MERN Stack Developer & AI Researcher</p>
+              <p className="font-serif font-semibold text-[var(--text-primary)]">
+                {post.author}
+              </p>
+              <p className="text-sm text-[var(--text-muted)]">
+                MERN Stack Developer & AI Researcher
+              </p>
             </div>
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="mb-8 rounded-lg overflow-hidden shadow-lg">
-          <img src={post.image || "/placeholder.svg"} alt={post.title} className="w-full h-auto object-cover" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="mb-8 rounded-lg overflow-hidden shadow-lg"
+        >
+          <img
+            src={post.image || "/placeholder.svg"}
+            alt={post.title}
+            className="w-full h-auto object-cover"
+          />
         </motion.div>
 
         <motion.div
@@ -125,13 +175,23 @@ const BlogDetails = () => {
           className="flex flex-wrap gap-4 mt-8 pt-8 border-t border-[var(--border-color)]"
         >
           {post.github && (
-            <a href={post.github} target="_blank" rel="noopener noreferrer" className="btn-academic-outline">
+            <a
+              href={post.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-academic-outline"
+            >
               <Github className="w-4 h-4" />
               View on GitHub
             </a>
           )}
           {post.liveDemo && (
-            <a href={post.liveDemo} target="_blank" rel="noopener noreferrer" className="btn-academic">
+            <a
+              href={post.liveDemo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-academic"
+            >
               <ExternalLink className="w-4 h-4" />
               Live Demo
             </a>
@@ -145,18 +205,28 @@ const BlogDetails = () => {
           className="flex justify-between items-center mt-12 pt-8 border-t border-[var(--border-color)]"
         >
           {prevPost ? (
-            <Link to={`/blogs/${prevPost.id}`} className="flex items-center gap-2 px-4 py-2 rounded-md text-sm border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent)]">
+            <Link
+              to={`/blogs/${prevPost.id}`}
+              className="flex items-center gap-2 px-4 py-2 rounded-md text-sm border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent)]"
+            >
               <ChevronLeft className="w-4 h-4" />
               Previous
             </Link>
-          ) : <div></div>}
+          ) : (
+            <div></div>
+          )}
 
           {nextPost ? (
-            <Link to={`/blogs/${nextPost.id}`} className="flex items-center gap-2 px-4 py-2 rounded-md text-sm border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent)]">
+            <Link
+              to={`/blogs/${nextPost.id}`}
+              className="flex items-center gap-2 px-4 py-2 rounded-md text-sm border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent)]"
+            >
               Next
               <ChevronRight className="w-4 h-4" />
             </Link>
-          ) : <div></div>}
+          ) : (
+            <div></div>
+          )}
         </motion.div>
       </article>
 
