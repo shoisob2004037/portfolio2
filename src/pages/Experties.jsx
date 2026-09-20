@@ -92,8 +92,8 @@ const Expertise = () => {
             />
             <ResearchCard
               icon={<Network className="w-7 h-7" />}
-              title="Autonomous Systems"
-              description="Autonomous Vehicles, Cyber-Physical Systems, and real-time detection."
+              title="Cyber Physical Systems"
+              description="Autonomous Vehicles, IoT, and Smart Grid Security."
             />
             <ResearchCard
               icon={<Cpu className="w-7 h-7" />}

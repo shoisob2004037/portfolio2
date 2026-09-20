@@ -133,7 +133,7 @@ const AboutMe = () => {
           </div>
         </div>
 
-        {/* Future Goals */}
+        {/* Future Goals 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -141,6 +141,7 @@ const AboutMe = () => {
           transition={{ duration: 0.5 }}
           className="academic-card p-8"
         >
+          
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 rounded-lg bg-[var(--accent-light)] text-[var(--accent)] border border-[var(--border-color)]">
               <Target className="w-5 h-5" />
@@ -182,6 +183,7 @@ const AboutMe = () => {
             </GoalItem>
           </div>
         </motion.div>
+        */}
       </div>
     </div>
   );

@@ -20,6 +20,12 @@ import {
   ChevronRight,
   Star,
   Quote,
+  Code,
+  Cpu,
+  Brain,
+  Database,
+  Shield,
+  Network,
 } from "lucide-react";
 import AboutMe from "./AboutMe";
 import { initialNewsData } from "./News";
@@ -297,12 +303,43 @@ const Home = () => {
 
   return (
     <>
-      {/* Banner Section */}
+      {/* ========== BANNER SECTION ========== */}
       <section
         id="banner"
-        className="min-h-[85vh] flex items-center bg-[var(--bg-secondary)] border-b border-[var(--border-color)]"
+        className="relative min-h-[85vh] flex items-center bg-[var(--bg-secondary)] border-b border-[var(--border-color)] overflow-hidden"
       >
-        <div className="container mx-auto px-4 py-12 max-w-6xl">
+        {/* --- TECH BACKGROUND LAYER --- */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, var(--accent) 1px, transparent 0)",
+              backgroundSize: "26px 26px",
+            }}
+          />
+          {/* Soft radial glow top-right */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gradient-to-br from-[var(--accent)]/10 to-[var(--teal)]/10 blur-3xl" />
+          {/* Soft radial glow bottom-left */}
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-gradient-to-tr from-[var(--teal)]/10 to-[var(--accent)]/10 blur-3xl" />
+        </div>
+
+        {/* --- FLOATING TECH ICONS --- */}
+        <div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          aria-hidden="true"
+        >
+          <Code className="absolute top-[18%] left-[6%] w-10 h-10 text-[var(--accent)] opacity-[0.08] animate-float-slow" />
+          <Cpu className="absolute top-[70%] left-[12%] w-12 h-12 text-[var(--teal)] opacity-[0.08] animate-float-slower" />
+          <Brain className="absolute top-[25%] right-[8%] w-12 h-12 text-[var(--accent)] opacity-[0.08] animate-float-slow" />
+          <Database className="absolute top-[75%] right-[14%] w-10 h-10 text-[var(--teal)] opacity-[0.08] animate-float-slower" />
+          <Shield className="absolute top-[45%] left-[3%] w-9 h-9 text-[var(--accent)] opacity-[0.06] animate-float-slow" />
+          <Network className="absolute top-[55%] right-[3%] w-9 h-9 text-[var(--teal)] opacity-[0.06] animate-float-slow" />
+        </div>
+
+        {/* --- HERO CONTENT --- */}
+        <div className="relative z-10 container mx-auto px-4 py-12 max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -416,6 +453,14 @@ const Home = () => {
                 <Download className="w-4 h-4" />
                 Download CV
               </a>
+
+              {/* ========== STATS GRID ========== */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 max-w-2xl">
+                <StatItem value="15+" label="Full Stack Projects" />
+                <StatItem value="5+" label="Publications" />
+                <StatItem value="3.76" label="Undergrad CGPA" />
+                <StatItem value="10+" label="Certifications" />
+              </div>
             </motion.div>
 
             <motion.div
@@ -426,7 +471,7 @@ const Home = () => {
             >
               <div className="relative">
                 <img
-                  src="/dp.jpg"
+                  src="/dp2.jpg"
                   alt="Mahadi Hasan Shaisob"
                   className="w-56 h-56 md:w-72 md:h-72 rounded-full object-cover border-4 border-[var(--bg-elevated)] shadow-lg bg-[var(--bg-tertiary)]"
                 />
@@ -464,7 +509,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Latest News */}
+      {/* ========== LATEST NEWS ========== */}
       <section className="py-16 bg-[var(--bg-primary)]">
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
@@ -539,8 +584,7 @@ const Home = () => {
 
       <AboutMe darkMode={darkMode} />
 
-      {/* Reviews Section (inside Home) */}
-      {/* Reviews Section (inside Home) */}
+      {/* ========== REVIEWS SECTION ========== */}
       <section className="py-16 bg-[var(--bg-secondary)] border-y border-[var(--border-color)]">
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
@@ -629,7 +673,7 @@ const Home = () => {
             </div>
           )}
 
-          {/* ✅ ALWAYS-VISIBLE CTA */}
+          {/* ALWAYS-VISIBLE CTA */}
           <div className="mt-10 text-center">
             <button
               onClick={() => navigate("/reviews")}
@@ -642,6 +686,99 @@ const Home = () => {
               Sign in with Google to share your feedback.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* ========== CONTACT SECTION ========== */}
+      <section
+        id="contact"
+        className="py-20 bg-[var(--bg-primary)]"
+      >
+        <div className="container mx-auto px-4 max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-center text-[var(--text-primary)]">
+              Get In Touch
+            </h2>
+            <div className="academic-divider"></div>
+            <p className="text-center text-[var(--text-secondary)] text-sm md:text-base mt-4 mb-8">
+              For any query or feedback, contact me.
+            </p>
+
+            <form
+              ref={formRef}
+              className="academic-card space-y-4"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              onSubmit={handleFormSubmit}
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="49cbfe00-01ee-4fe3-ba7b-2bacf3cd14b5"
+              />
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+                className="academic-input"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+                className="academic-input"
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder="Your Address"
+                required
+                className="academic-input"
+              />
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                rows="5"
+                required
+                className="academic-input"
+              ></textarea>
+
+              {formStatus === "success" && (
+                <div className="p-3 bg-[var(--accent-light)] text-[var(--accent)] rounded-md text-sm">
+                  Message sent successfully!
+                </div>
+              )}
+              {formStatus === "error" && (
+                <div className="p-3 bg-red-100 text-red-700 rounded-md text-sm">
+                  Failed to send message. Please try again.
+                </div>
+              )}
+
+              <div className="text-center">
+                <button
+                  type="submit"
+                  disabled={formStatus === "submitting"}
+                  className="btn-academic disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formStatus === "submitting" ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Send Message
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </motion.div>
         </div>
       </section>
 
@@ -665,6 +802,7 @@ const Home = () => {
   );
 };
 
+// ========== SOCIAL LINK ==========
 const SocialLink = ({ href, icon, title }) => (
   <a
     href={href}
@@ -675,6 +813,18 @@ const SocialLink = ({ href, icon, title }) => (
   >
     {icon}
   </a>
+);
+
+// ========== STAT ITEM ==========
+const StatItem = ({ value, label }) => (
+  <div className="academic-card p-3 sm:p-4 text-center hover:border-[var(--accent)] transition-all duration-300 group">
+    <div className="font-serif text-2xl sm:text-3xl font-bold text-[var(--accent)] group-hover:text-[var(--teal)] transition-colors">
+      {value}
+    </div>
+    <div className="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">
+      {label}
+    </div>
+  </div>
 );
 
 export default Home;

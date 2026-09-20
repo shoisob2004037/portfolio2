@@ -1,10 +1,11 @@
-/* Google Fonts - Academic Typography */
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap");
+/* Google Fonts - Academic Typography + Logo Font */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Baloo+2:wght@600;700;800&display=swap");
 
 /* ============ DESIGN TOKENS ============ */
 :root {
   --font-serif: "Merriweather", Georgia, "Times New Roman", serif;
   --font-sans: "Inter", "Open Sans", system-ui, -apple-system, sans-serif;
+  --font-logo: "Baloo 2", "Inter", system-ui, sans-serif;
 
   /* Light Mode - Academic Palette */
   --bg-primary: #ffffff;
@@ -368,4 +369,36 @@ button {
   .section-academic-alt {
     padding: 2.5rem 0;
   }
+}
+
+
+/* Floating tech icons in hero */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(6deg); }
+}
+
+@keyframes floatSlower {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(16px) rotate(-8deg); }
+}
+
+.animate-float-slow { animation: floatSlow 9s ease-in-out infinite; }
+.animate-float-slower { animation: floatSlower 12s ease-in-out infinite; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-slower { animation: none; }
+}
+
+
+.section-academic {
+  padding: 4rem 0;
+  background-color: transparent; /* was: var(--bg-primary) */
+}
+
+.section-academic-alt {
+  padding: 4rem 0;
+  background-color: color-mix(in srgb, var(--bg-secondary) 60%, transparent);
 }

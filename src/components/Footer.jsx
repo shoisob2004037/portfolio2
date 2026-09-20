@@ -20,7 +20,7 @@ const Footer = () => {
               <li><Link to="/projects" className="hover:text-[var(--accent)]">Projects</Link></li>
               <li><Link to="/publications" className="hover:text-[var(--accent)]">Publications</Link></li>
               <li><Link to="/certifications" className="hover:text-[var(--accent)]">Certifications</Link></li>
-              <li><Link to="/hobby" className="hover:text-[var(--accent)]">Hobby</Link></li>
+              {/* <li><Link to="/hobby" className="hover:text-[var(--accent)]">Hobby</Link></li> */}
               <li><Link to="/about-me" className="hover:text-[var(--accent)]">About Me</Link></li>
               <li><Link to="/blogs" className="hover:text-[var(--accent)]">Blogs</Link></li>
             </ul>

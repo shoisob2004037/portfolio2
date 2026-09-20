@@ -230,7 +230,7 @@ const Hobby = () => {
                 <h5 className="font-serif text-sm font-semibold mb-2 text-[var(--text-primary)] leading-snug">
                   {book.title}
                 </h5>
-                <hr className="my-2 w-12 border-t border-[var(--border-color)]" />
+                <hr className="my-2 w-12 border-t-2 border-[var(--teal)] opacity-40" />
                 <p className="text-xs text-[var(--text-muted)]">
                   -{book.author}
                 </p>

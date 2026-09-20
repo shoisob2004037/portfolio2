@@ -236,7 +236,7 @@ const News = () => {
             <span>Academic & Research Updates</span>
           </div>
           <h1 className="font-serif text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
-            News & <span className="text-[var(--accent)]">Activities</span>
+            News & Activities
           </h1>
           <div className="academic-divider"></div>
           <p className="mt-4 text-sm md:text-base max-w-2xl mx-auto text-[var(--text-secondary)]">
